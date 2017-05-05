@@ -4,6 +4,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {fade} from 'material-ui/utils/colorManipulator'
 import AppBar from 'material-ui/AppBar'
 import { Grid, Row, Col } from 'react-bootstrap'
+
+import EmployeeList from './components/EmployeeListBar'
+import ToolBar from './components/ToolBar'
+import BarContent from './components/BarContent'
 import './index.css' 
 
 import {
@@ -49,7 +53,14 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <Grid fluid={true}>
-                <Row><AppBar id={'appss'}/></Row>
+                    <Row><AppBar id='app-bar'/></Row>
+                    <Row><BarContent /></Row>
+                    <Row>
+                        <Col sm={6} md={4}>
+                            <Row><ToolBar /></Row>
+                            <Row><EmployeeList /></Row>
+                        </Col>
+                    </Row>
                 </Grid>
             </MuiThemeProvider>
         )

@@ -1,4 +1,4 @@
-#app-bar {
+#bar-content {
     margin-bottom: 13px;
 }
 
@@ -9,7 +9,7 @@
 
 #avatar {
     float: left;
-    padding-top: 10px;
+    padding-top: 4px;
     margin-left: 55px;
     margin-right: 10px;
 }
@@ -20,12 +20,11 @@
     margin-top: -30px;
 }
 
+.icon-styles {
+    margin-right: 5px !important;
+};
 
-#iconStyles {
-    marginRight: 5px;
-}
-
-#avatarStyle {
-    height: 50px;
-    width: 50px;
+.avatar-style {
+    height: 50px !important;
+    width: 50px !important;
 };

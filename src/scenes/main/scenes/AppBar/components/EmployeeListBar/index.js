@@ -6,6 +6,8 @@ import {Pagination} from 'react-bootstrap'
 
 import EmployeeItem from './components/EmployeeItem'
 
+import * as dummyEmployees from './employees'
+
 
 const style = {
     float: "right"
@@ -15,12 +17,10 @@ class EmployeeListBar extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             activePage: 1,
             dummyEmployeeStore: {
-                displayedList: [{a:"a"}, {a:"a"}], 
-                count: 0, 
+                displayedList: dummyEmployees.employees
             }
         }
 

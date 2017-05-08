@@ -37,11 +37,9 @@ class EmployeeItem extends Component {
     }
 
     render () {
-        debugger
         const employee = this.props.employee;
-        const { officeLocations, grades } = employee;
-        const profile = employee[1];
-        const id = employee[0];
+        const { officeLocations, grades, profile } = employee.emp;
+        const { id } = employee;
         const currentLocation = officeLocations ? getCurrentLocation(officeLocations) : null;
         const currentGrade = grades ? getCurrentGrade(grades) : null;
         const fullName = getEmployeeFullName(profile);

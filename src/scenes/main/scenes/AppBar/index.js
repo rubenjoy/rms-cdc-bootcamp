@@ -5,8 +5,9 @@ import {fade} from 'material-ui/utils/colorManipulator'
 import AppBar from 'material-ui/AppBar'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-import EmployeeList from './components/EmployeeListBar'
+import EmployeeListBar from './components/EmployeeListBar'
 import ToolBar from './components/ToolBar'
+import TabBar from './components/TabBar'
 import BarContent from './components/BarContent'
 import './index.css' 
 
@@ -46,6 +47,9 @@ const muiTheme = getMuiTheme({
 class App extends Component {
     constructor () {
         super(); 
+        this.state = {
+            dummyPathname: "/profile"
+        }
     }
 
     render () { 
@@ -58,7 +62,11 @@ class App extends Component {
                     <Row>
                         <Col sm={6} md={4}>
                             <Row><ToolBar /></Row>
-                            <Row><EmployeeList /></Row>
+                            <Row><EmployeeListBar /></Row>
+                        </Col>
+                        <Col sm={12} md={8}>
+                            <Row><TabBar location={this.state.dummyPathname} /></Row>
+                            <Row>{this.props.children}</Row>
                         </Col>
                     </Row>
                 </Grid>

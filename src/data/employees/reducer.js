@@ -23,3 +23,17 @@ export const reducer = (state = initialState, action) => {
         }
     }
 };
+
+export const currentEmployee = (state = initialState, action) => {
+    switch (action.type) {
+        case actionTypes.SET_CURR_EMPLOYEE: {
+            return {
+                ...initialState,
+                currentEmployee: action.payload
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};

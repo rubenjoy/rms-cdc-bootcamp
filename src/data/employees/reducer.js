@@ -1,11 +1,11 @@
-import * as actionTypes from './actionTypes'
+import * as actionTypes from './actionTypes';
 
 // State by default
 const initialState = {
     employees: [],
     currentEmployee: {},
     newEmployee: {}
-}
+};
 
 // Process the data based on action taken (immutable)
 export const reducer = (state = initialState, action) => {
@@ -15,12 +15,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...initialState,
                 employees: action.payload
-            }
+            };
         }
-
         // If no action match
         default: {
-            return state
+            return state;
         }
     }
-}
+};

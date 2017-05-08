@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
+import IconButton from 'material-ui/IconButton';
+import ActionSearch from 'material-ui/svg-icons/action/search';
+import AvSortByAlpha from 'material-ui/svg-icons/av/sort-by-alpha';
+import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
+import AVPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -61,8 +66,11 @@ class Toolbars extends Component {
             <div>
                 <Toolbar style={toolbarStyles}>
                     <ToolbarGroup>
-                        {/*<Search color={white} size={50} />*/}
-                        <FontIcon className="fa fa-search" color={white}/>
+
+                        <IconButton>
+                            <ActionSearch color={white} />
+                        </IconButton>
+
                         <TextField fullWidth={true}
                                    className="search-text"
                                    hintText="Search"
@@ -72,10 +80,14 @@ class Toolbars extends Component {
                         />
                         <FontIcon className="fa fa-sort-amount-desc" 
                                     color={white}
-                        />
-                        <FontIcon className="fa fa-filter" 
-                                    color={white} 
-                        />
+                        />                    
+                        <IconButton tooltip={this.state.filterByCriteria? "Filter On":"Filter Off"} 
+                            className="panel-list-btn">
+                            <ContentFilterList color={white} />
+                        </IconButton>
+                        <IconButton tooltip="Order" className="panel-list-btn" >
+                            <AVPlaylistAddCheck color={white} />
+                        </IconButton>
                         <Chip></Chip>
                     </ToolbarGroup>
                 </Toolbar>

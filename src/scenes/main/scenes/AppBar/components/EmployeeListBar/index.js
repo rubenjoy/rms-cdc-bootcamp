@@ -4,9 +4,10 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import {Pagination} from 'react-bootstrap'
 
-import EmployeeItem from './components/EmployeeItem'
+import EmployeeItem from '.././EmployeeListItem'
 
-import * as dummyEmployees from './employees'
+import * as dummyEmployees 
+    from '../../../../../../utils/dummy/employees'
 
 
 const style = {

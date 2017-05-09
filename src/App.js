@@ -3,9 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import store from './data/store';
 import { Provider } from 'react-redux';
+import { dispatchFetchEmployees } from './data/employees/actionCreators';
 
 class App extends Component {
   render() {
+    dispatchFetchEmployees(store)();
     return (
       <Provider store={store}>
         <div className="App">

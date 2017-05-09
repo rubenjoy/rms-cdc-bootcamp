@@ -14,24 +14,22 @@ export const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EMPLOYEES:{
             return {
                 ...initialState,
-                employees: action.payload
+                employees: action.payload,
+                // Clear these data
+                currentEmployee: {},
+                newEmployee: {}
             };
         }
-        // If no action match
-        default: {
-            return state;
-        }
-    }
-};
 
-export const currentEmployee = (state = initialState, action) => {
-    switch (action.type) {
+        // Current employee
         case actionTypes.SET_CURR_EMPLOYEE: {
             return {
                 ...initialState,
                 currentEmployee: action.payload
             };
         }
+        
+        // If no action match
         default: {
             return state;
         }

@@ -14,7 +14,10 @@ export const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EMPLOYEES:{
             return {
                 ...initialState,
-                employees: action.payload
+                employees: action.payload,
+                // Clear these data
+                currentEmployee: {},
+                newEmployee: {}
             };
         }
         // If no action match

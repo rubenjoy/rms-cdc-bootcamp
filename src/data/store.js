@@ -11,7 +11,4 @@ const reducers = combineReducers({
     currentEmployee: employeesReducer.currentEmployee
 });
 
-export default createStore = () => (
-    reducers
-//    ,applyMiddleware(...middleware)
-);
+export default createStore (reducers);

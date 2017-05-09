@@ -1,5 +1,4 @@
-export const employees = {
-  employees: [
+export const employees = [
     {
       id: 0,
       emp: {
@@ -126,4 +125,3 @@ export const employees = {
       }
     }
   ]
-}

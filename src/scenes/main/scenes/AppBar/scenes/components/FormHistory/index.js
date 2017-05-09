@@ -29,7 +29,7 @@ const fabStyle = {
     marginTop: -10
 }
 
-class HistoryForm extends Component {
+class FormHistory extends Component {
 
     constructor(props) {
         super(props);
@@ -325,11 +325,11 @@ class HistoryForm extends Component {
     }
 }
 
-HistoryForm.propTypes = {
+FormHistory.propTypes = {
     projects: React.PropTypes.any.isRequired,
     onSave: React.PropTypes.func.isRequired,
     setErrorMessage: React.PropTypes.func.isRequired,
     viewingEmpId: React.PropTypes.number.isRequired
 };
 
-export default HistoryForm
+export default FormHistory

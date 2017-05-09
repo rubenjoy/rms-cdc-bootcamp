@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import NoEmployee from '../components/NoEmployee';
 import RaisedButton from 'material-ui/RaisedButton';
+import FormProfile from '../components/FormProfile'
 
-import * as dummyEmployees from '../employees'
-
-import ProfileForm from '../components/ProfileForm'
+import * as dummyEmployees 
+    from '../../../../../../utils/dummy/employees'
 import { genders, employeeStatusMap, maritalStatusMap } 
     from '../../../../../../utils/lib/employeeHelpers'
 
@@ -66,6 +66,8 @@ class TabProfile extends Component {
             <div>
                 { this.state.dummyCount > 0 ?
                     <div>
+                        <FormProfile initialValues={profile}
+                        />
                         <div className="row" id="bottom-bar">
                             <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
                             <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.onCancel()}  />

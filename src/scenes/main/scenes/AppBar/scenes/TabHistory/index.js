@@ -1,17 +1,27 @@
 import React, {Component} from 'react';
-import { observer, inject } from 'mobx-react';
-import HistoryForm from '../components/HistoryForm';
+import FormHistory from '../components/FormHistory';
 import NoEmployee from '../components/NoEmployee';
 
-class HistoryTab extends Component {
+import * as dummyEmployees 
+    from '../../../../../../utils/dummy/employees'
+
+class TabHistory extends Component {
 
     constructor () {
         super();
+        this.state = {
+            employeeStore: dummyEmployees,
+            dummyViewingEmpId: 0,
+            dummyCount: 1
+        }
     }
 
     render () {
-        const { viewingEmpId, updateProjects, count, sortedHistory, setErrorMessage } = employeeStore;
-
+        const {sortedHistory} = this.state.dummyEmployees;
+        const setErrorMessage = () => {}
+        const viewingEmpId = 1;
+        const count = 1;
+        const updateProjects = () => {}
         const projects = sortedHistory ? sortedHistory : [];
 
         let histForm = null;
@@ -24,7 +34,7 @@ class HistoryTab extends Component {
         return (
             <div>
                 { count > 0 ?
-                    <HistoryForm projects={projects}
+                    <FormHistory projects={projects}
                                  onSave={onSaveProjects}
                                  setErrorMessage={setErrorMessage}
                                  viewingEmpId={viewingEmpId ? viewingEmpId : 0}

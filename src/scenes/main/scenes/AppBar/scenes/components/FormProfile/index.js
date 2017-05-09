@@ -26,7 +26,7 @@ const cameraPickStyle = {
     marginLeft: -20
 }
 
-class ProfileForm extends Component {
+class FormProfile extends Component {
 
     constructor(props) {
         super(props);
@@ -335,10 +335,10 @@ class ProfileForm extends Component {
     }
 }
 
-ProfileForm.propTypes = {
+FormProfile.propTypes = {
     initialValues: React.PropTypes.object,
     currentGrade: React.PropTypes.string,
     jobFamilies: React.PropTypes.object.isRequired
 };
 
-export default ProfileForm
+export default FormProfile

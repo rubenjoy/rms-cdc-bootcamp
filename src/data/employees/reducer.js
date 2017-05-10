@@ -28,6 +28,14 @@ export const reducer = (state = initialState, action) => {
                 currentEmployee: action.payload
             };
         }
+
+        // Current employee
+        case actionTypes.SET_NEW_EMPLOYEE: {
+            return {
+                ...initialState,
+                newEmployee: action.payload
+            };
+        }
         
         // If no action match
         default: {

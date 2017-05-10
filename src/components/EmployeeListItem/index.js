@@ -41,11 +41,11 @@ class EmployeeItem extends Component {
         console.log(this.props);
 
         const employee = this.props.employee;
-        const { officeLocations, grades, profile } = employee.emp;
+        const { officeLocations, grades } = employee;
         const { id } = employee;
         const currentLocation = officeLocations ? getCurrentLocation(officeLocations) : null;
         const currentGrade = grades ? getCurrentGrade(grades) : null;
-        const fullName = getEmployeeFullName(profile);
+        const fullName = getEmployeeFullName(employee);
         const { viewingEmpId, deleteEmployee, loadSingleEmployee } = this.state.dummyEmployeeStore;
         const isSelected = Number(id) === viewingEmpId;
 
@@ -71,12 +71,12 @@ class EmployeeItem extends Component {
             <div >
                 <ListItem
                     value={id}
-                    leftAvatar={<Avatar src={profile.avatar} />}
+                    leftAvatar={<Avatar src={employee.avatar} />}
                     primaryText={fullName}
                     secondaryText={
                         <p>
-                            {currentGrade ? currentGrade.grade : "N/A"}, {profile.division}<br />
-                            {currentLocation ? currentLocation.officeLocation : "N/A"}, {profile.phone}
+                            {currentGrade ? currentGrade.grade : "N/A"}, {employee.division}<br />
+                            {currentLocation ? currentLocation.officeLocation : "N/A"}, {employee.phone}
                         </p>
                     }
                     secondaryTextLines={2}

@@ -37,6 +37,9 @@ class EmployeeItem extends Component {
     }
 
     render () {
+        // Employee data should be here, Yos
+        console.log(this.props);
+
         const employee = this.props.employee;
         const { officeLocations, grades, profile } = employee.emp;
         const { id } = employee;

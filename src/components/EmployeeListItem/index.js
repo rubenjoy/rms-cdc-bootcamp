@@ -10,6 +10,10 @@ import { grey400 } from 'material-ui/styles/colors'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as RMSActions from '../../data/employees/actionCreators';
+
 class EmployeeItem extends Component {
 
     constructor () {
@@ -26,8 +30,8 @@ class EmployeeItem extends Component {
         this.onSelectEmployee = this.onSelectEmployee.bind(this);
     }
 
-    onSelectEmployee (id) {
-      //  loadSingleEmployee(id);
+    onSelectEmployee (employee) {
+      this.props.actions.setCurrentEmployee(employee);
     }
 
     onDeleteEmployee(id) {
@@ -80,7 +84,7 @@ class EmployeeItem extends Component {
                         </p>
                     }
                     secondaryTextLines={2}
-                    onTouchTap={() => this.onSelectEmployee(id)}
+                    onTouchTap={() => this.onSelectEmployee(employee)}
                     rightIconButton={rightIconMenu(id, fullName)}
                 />
                 <Divider style={dividerStyle}  />
@@ -92,4 +96,8 @@ class EmployeeItem extends Component {
 
 }
 
-export default EmployeeItem
+const mapDispatchToProps = (dispatch) => (
+    {actions: bindActionCreators(RMSActions, dispatch)}
+)
+
+export default connect(null, mapDispatchToProps)(EmployeeItem)

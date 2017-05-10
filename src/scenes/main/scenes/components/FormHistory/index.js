@@ -10,9 +10,9 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { pinkA200 } from 'material-ui/styles/colors';
 import FontIcon from 'material-ui/FontIcon';
 import { errorMessage }
-    from '../../../../../../../utils/lib/constants'
+    from '../../../../../utils/lib/constants'
 import { generateProjectId }
-    from '../../../../../../../utils/lib/employeeHelpers';
+    from '../../../../../utils/lib/employeeHelpers';
 
 const buttonStyle = {
     float: "right",

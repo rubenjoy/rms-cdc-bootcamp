@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import TextField from 'material-ui/TextField';
 import { genders, employeeStatusMap, maritalStatusMap } 
-    from '../../../../../../../utils/lib/constants'
+    from '../../../../../utils/lib/constants'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';

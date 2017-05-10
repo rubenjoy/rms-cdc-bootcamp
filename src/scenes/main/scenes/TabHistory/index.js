@@ -3,7 +3,7 @@ import FormHistory from '../components/FormHistory';
 import NoEmployee from '../components/NoEmployee';
 
 import * as dummyEmployees 
-    from '../../../../../../utils/dummy/employees'
+    from '../../../../utils/dummy/employees'
 
 class TabHistory extends Component {
 

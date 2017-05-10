@@ -4,9 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FormProfile from '../components/FormProfile'
 
 import * as dummyEmployees 
-    from '../../../../../../utils/dummy/employees'
+    from '../../../../utils/dummy/employees'
 import { genders, employeeStatusMap, maritalStatusMap } 
-    from '../../../../../../utils/lib/employeeHelpers'
+    from '../../../../utils/lib/employeeHelpers'
 
 
 const buttonStyle = {

@@ -1,0 +1,3 @@
+export const FETCH_EMPLOYEES = 'FETCH_EMPLOYEES';
+export const SET_EMPLOYEE    = 'SET_EMPLOYEE';
+export const SET_CURR_EMPLOYEE = 'SET_CURR_EMPLOYEE';

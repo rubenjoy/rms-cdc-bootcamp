@@ -13,7 +13,7 @@ export const reducer = (state = initialState, action) => {
         // On fetch
         case actionTypes.FETCH_EMPLOYEES:{
             return {
-                ...initialState,
+                ...state,
                 employees: action.payload,
                 // Clear these data
                 currentEmployee: {},
@@ -24,7 +24,7 @@ export const reducer = (state = initialState, action) => {
         // Current employee
         case actionTypes.SET_CURR_EMPLOYEE: {
             return {
-                ...initialState,
+                ...state,
                 currentEmployee: action.payload
             };
         }

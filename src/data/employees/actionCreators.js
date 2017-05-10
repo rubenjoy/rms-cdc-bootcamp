@@ -16,3 +16,7 @@ export const dispatchFetchEmployees = ({dispatch}) => {
             });
     }
 };
+
+export const setCurrentEmployee = (employee) => (dispatch) => (
+    dispatch(action.setCurrEmployee(employee))
+);

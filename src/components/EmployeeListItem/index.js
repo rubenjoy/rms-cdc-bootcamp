@@ -3,7 +3,7 @@ import {ListItem} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import Divider from 'material-ui/Divider'
 import { getCurrentGrade, getCurrentLocation, getEmployeeFullName } 
-    from '../../../../../../utils/lib/employeeHelpers'
+    from '../../utils/lib/employeeHelpers'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
 import { grey400 } from 'material-ui/styles/colors'

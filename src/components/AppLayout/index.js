@@ -5,10 +5,10 @@ import {fade} from 'material-ui/utils/colorManipulator'
 import AppBar from 'material-ui/AppBar'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-import EmployeeListBar from './components/EmployeeListBar'
-import ToolBar from './components/ToolBar'
-import TabBar from './components/TabBar'
-import BarContent from './components/BarContent'
+import EmployeeListBar from '../EmployeeListBar'
+import ToolBar from '../ToolBar'
+import TabBar from '../TabBar'
+import BarContent from '../BarContent'
 import './index.css' 
 
 import {

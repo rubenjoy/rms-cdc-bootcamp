@@ -12,6 +12,7 @@ export const dispatchFetchEmployees = ({dispatch}) => {
             })
             .catch(error => {
                 alert('Error occured');
+                console.log(error)
             });
     }
 };

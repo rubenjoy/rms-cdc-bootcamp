@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import { List } from 'material-ui/List';
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
-import {Pagination} from 'react-bootstrap'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import {Pagination} from 'react-bootstrap';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import { connect } from 'react-redux';
 
-import EmployeeItem from '../EmployeeListItem'
+import EmployeeItem from '../EmployeeListItem';
 
 import * as dummyEmployees 
-    from '../../utils/dummy/employees'
+    from '../../utils/dummy/employees';
 
 
 const style = {
@@ -44,6 +46,16 @@ class EmployeeListBar extends Component {
         refreshListEmployees();
     }
 
+    renderEmployees() {
+        return this.props.employees.map((employee, idx) => {
+            return (
+                <EmployeeItem key={idx}
+                            employee={employee}
+                />
+            );
+        });
+    }
+
     render() {
         const { displayedList, count, loading, pagingInfo, errorMessage, resetErrorMessage, setErrorMessage } = this.state.dummyEmployeeStore;
       //  const { jobFamilies } = this.props.jobFamilyStore;
@@ -51,11 +63,7 @@ class EmployeeListBar extends Component {
         return (
             <div id="employee-list">
                 <List>
-                    {displayedList.map((employee, i) =>
-                        <EmployeeItem key={i}
-                                      employee={employee}
-                        />
-                    )}
+                    {this.renderEmployees()}
                 </List>
 
                 <FloatingActionButton mini={true} style={style}>
@@ -66,4 +74,9 @@ class EmployeeListBar extends Component {
     }
 }
 
-export default EmployeeListBar
+export default connect((state) => {
+  return {
+    employees: state.employees.employees,
+    currentEmployee: state.employees.currentEmployee
+  }
+})(muiThemeable()(EmployeeListBar))

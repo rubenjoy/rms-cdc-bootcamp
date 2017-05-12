@@ -12,7 +12,7 @@ export const createRoutes = (store) => ({
   childRoutes : [
     {
       path: '/profile',
-      indexRoute: TabProfile
+      component: TabProfile
     }
   ]
 })

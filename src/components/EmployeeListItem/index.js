@@ -73,7 +73,7 @@ class EmployeeItem extends Component {
                         </p>
                     }
                     secondaryTextLines={2}
-                    onTouchTap={() => this.onSelectEmployee(employee.empId)}
+                    onTouchTap={() => this.onSelectEmployee(employee)}
                     rightIconButton={rightIconMenu(employee.empId, employee.firstName+' '+employee.lastName)}
                 />
                 <Divider style={dividerStyle}  />

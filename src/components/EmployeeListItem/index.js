@@ -2,13 +2,15 @@ import React, {Component} from 'react'
 import {ListItem} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import Divider from 'material-ui/Divider'
-import { getCurrentGrade, getCurrentLocation, getEmployeeFullName } 
-    from '../../utils/lib/employeeHelpers'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
 import { grey400 } from 'material-ui/styles/colors'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as RMSActions from '../../data/employees/actionCreators';
 
 class EmployeeItem extends Component {
 
@@ -26,8 +28,8 @@ class EmployeeItem extends Component {
         this.onSelectEmployee = this.onSelectEmployee.bind(this);
     }
 
-    onSelectEmployee (id) {
-      //  loadSingleEmployee(id);
+    onSelectEmployee (employee) {
+      this.props.actions.setCurrentEmployee(employee);
     }
 
     onDeleteEmployee(id) {
@@ -37,17 +39,8 @@ class EmployeeItem extends Component {
     }
 
     render () {
-        // Employee data should be here, Yos
-        console.log(this.props);
-
         const employee = this.props.employee;
-        const { officeLocations, grades } = employee;
-        const { id } = employee;
-        const currentLocation = officeLocations ? getCurrentLocation(officeLocations) : null;
-        const currentGrade = grades ? getCurrentGrade(grades) : null;
-        const fullName = getEmployeeFullName(employee);
-        const { viewingEmpId, deleteEmployee, loadSingleEmployee } = this.state.dummyEmployeeStore;
-        const isSelected = Number(id) === viewingEmpId;
+        const isSelected = Number(employee.empId) === this.state.viewingEmpId;
 
         const iconButtonElement = (
             <IconButton
@@ -70,18 +63,18 @@ class EmployeeItem extends Component {
         return (
             <div >
                 <ListItem
-                    value={id}
+                    value={employee.EmpId}
                     leftAvatar={<Avatar src={employee.avatar} />}
-                    primaryText={fullName}
+                    primaryText={employee.firstName+' '+employee.lastName}
                     secondaryText={
                         <p>
-                            {currentGrade ? currentGrade.grade : "N/A"}, {employee.division}<br />
-                            {currentLocation ? currentLocation.officeLocation : "N/A"}, {employee.phone}
+                            {(employee.grades.length > 0) ? employee.grades[0].grade : "N/A"}, {employee.division}<br />
+                            {(employee.officeLocations.length > 0 ) ? employee.officeLocations[0].officeLocation : "N/A"}, {employee.phone}
                         </p>
                     }
                     secondaryTextLines={2}
-                    onTouchTap={() => this.onSelectEmployee(id)}
-                    rightIconButton={rightIconMenu(id, fullName)}
+                    onTouchTap={() => this.onSelectEmployee(employee.empId)}
+                    rightIconButton={rightIconMenu(employee.empId, employee.firstName+' '+employee.lastName)}
                 />
                 <Divider style={dividerStyle}  />
             </div>
@@ -92,4 +85,8 @@ class EmployeeItem extends Component {
 
 }
 
-export default EmployeeItem
+const mapDispatchToProps = (dispatch) => (
+    {actions: bindActionCreators(RMSActions, dispatch)}
+)
+
+export default connect(null, mapDispatchToProps)(EmployeeItem)

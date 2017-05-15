@@ -1,31 +1,37 @@
 import React, {Component} from 'react';
 import NoEmployee from '../components/NoEmployee';
-import RaisedButton from 'material-ui/RaisedButton';
-import FormProfile from '../components/FormProfile'
+import FormProfile from '../components/FormProfile';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import {bindActionCreators} from 'redux';
 
-import * as dummyEmployees 
-    from '../../../../utils/dummy/employees'
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import * as dummy
+    from '../../../../utils/dummy/employees';
 import { genders, employeeStatusMap, maritalStatusMap } 
-    from '../../../../utils/lib/employeeHelpers'
-
-
-const buttonStyle = {
-    float: "right",
-    marginRight: 10,
-    marginTop: 5
-}
+    from '../../../../utils/lib/employeeHelpers';
+import { errorMessage } 
+    from '../../../../utils/lib/constants';
+import { dispatchUpdateEmployees } 
+    from '../../../../data/employees/actionCreators'
 
 class TabProfile extends Component {
 
-    constructor () {
+    constructor (props) {
         super();
         this.onSave = this.onSave.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.state = {
-            employeeStore: dummyEmployees,
+            employee : {},
+            employeeStore: dummy.employees,
+            jobFamilies: dummy.jobFamilies,
             dummyViewingEmpId: 0,
             dummyCount: 1
         }
+
+        this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
+
+        this.getInitialEmployee(props);
     }
 
     onCancel () {
@@ -33,46 +39,39 @@ class TabProfile extends Component {
     }
 
     onSave () {
+        debugger
+        dispatchUpdateEmployees(this.props)(this.state.employee);
+    }
 
+    componentWillReceiveProps(nextProps, nextState) {
+        this.getInitialEmployee(nextProps);
+        return true;
+    }
+
+
+    updateEmployeeForm (newForm) {
+        this.setState({employee: newForm});
+    }
+
+    getInitialEmployee (props) {
+        let {employees} = props;
+
+        let employee = employees && employees.length > 0 ? 
+            _.find(employees, {empId: props.currentEmployee}) : {};
+
+        this.setState({employee});
     }
 
     render () {
-
-    const {employees} = this.state.employeeStore;
-
-    const defaultProfile = (employee) => ({
-        firstName: employee.firstName,
-        lastName: employee.lastName,
-        gender: employee.gender,
-        dob: employee.dob,
-        maritalStatus: employee.maritalStatus,
-        phone: employee.phone,
-        email: employee.email,
-        empStatus: employee.empStatus,
-        suspendDate: employee.suspendDate,
-        hiredDate: employee.hiredDate,
-        nationality: employee.nationality,
-        avatar: employee.avatar,
-        jobFamily: employee.jobFamily,
-        division: employee.division,
-        subDivision: employee.subDivision
-    })
-
-    let profileForm = null;
-    const employee = employees.size > 0 ? employees.get(this.state.dummyViewingEmpId) : {};
-    let profile = employee ? defaultProfile(employee) : {}
-
         return (
             <div>
                 { this.state.dummyCount > 0 ?
-                    <div>
-                        <FormProfile initialValues={profile}
+                        <FormProfile initialValues={this.state.employee}
+                                 jobFamilies={this.state.jobFamilies}
+                                 updateState={this.updateEmployeeForm}
+                                 onSave={this.onSave}
+                                 onCancel={this.onCancel}
                         />
-                        <div className="row" id="bottom-bar">
-                            <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
-                            <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.onCancel()}  />
-                        </div>
-                    </div>
                     : <NoEmployee/> }
             </div>
         );
@@ -80,4 +79,9 @@ class TabProfile extends Component {
 
 }
 
-export default TabProfile
+export default connect((state) => {
+  return {
+    employees: state.employees.employees,
+    currentEmployee: state.employees.currentEmployee
+  }
+})(muiThemeable()(TabProfile))

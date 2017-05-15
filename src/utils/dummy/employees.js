@@ -124,4 +124,43 @@ export const employees = [
         ]
       }
     }
-  ]
+  ];
+
+  export const jobFamilies = [
+    {
+      jfCode: "SE",
+      jobFamily: "Software Engineer",
+      minDs: 1,
+      maxDs: 22,
+      divisions: [
+        {
+          divCode: "SWDG",
+          division: "SWD Green",
+          subDivision: []
+        },
+        {
+          divCode: "SWDR",
+          division: "SWD Red",
+          subDivision: []
+        }
+      ]
+    },
+    {
+      jfCode: "SE2",
+      jobFamily: "Software Engineer 2",
+      minDs: 1,
+      maxDs: 22,
+      divisions: [
+        {
+          divCode: "SWDG2",
+          division: "SWD Green2",
+          subDivision: []
+        },
+        {
+          divCode: "SWDR2",
+          division: "SWD Red2",
+          subDivision: []
+        }
+      ]
+    }
+  ] ;

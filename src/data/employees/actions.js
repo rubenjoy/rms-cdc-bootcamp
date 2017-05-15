@@ -7,6 +7,13 @@ export const fetchEmployees = (employees) => {
     };
 };
 
+export const editEmployee = (employee) => {
+	return {
+		type: actionTypes.EDIT_EMPLOYEE,
+        payload: employee
+	};
+};
+
 // will be called when user clicks the employee on the list
 export const setCurrEmployee = (employee) => {
     return{

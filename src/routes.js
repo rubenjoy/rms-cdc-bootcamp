@@ -8,7 +8,9 @@ import TabProfile from './scenes/main/scenes/TabProfile'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : AppLayout,
-  indexRoute  : TabProfile,
+  indexRoute  : {
+      component: TabProfile
+  },
   childRoutes : [
     {
       path: '/profile',

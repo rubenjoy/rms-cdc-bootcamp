@@ -20,12 +20,49 @@ export const reducer = (state = initialState, action) => {
                 newEmployee: {}
             };
         }
+        // Add employee
+        case actionTypes.ADD_EMPLOYEE:{
+            return {
+                ...state,
+                employees: [
+                    ...state.employees,
+                    action.payload
+                ]
+            };
+        }
+        // Delete employee
+        case actionTypes.DELETE_EMPLOYEE:{
+            debugger
+            let index = state.employees.findIndex((x) => x.empId === action.payload); 
+            return {
+                ...state,
+                employees: [
+                ...state.employees.slice(0, index),
+                ...state.employees.slice(index + 1)
+                ]
+            };
+        }
+        // Edit employee
+        case actionTypes.EDIT_EMPLOYEE:{
+            return {
+                ...state,
+                employees: editEmployee(state, action)
+            };
+        }
 
         // Current employee
         case actionTypes.SET_CURR_EMPLOYEE: {
             return {
                 ...state,
                 currentEmployee: action.payload
+            };
+        }
+
+        // Current employee
+        case actionTypes.SET_NEW_EMPLOYEE: {
+            return {
+                ...initialState,
+                newEmployee: action.payload
             };
         }
         
@@ -35,3 +72,18 @@ export const reducer = (state = initialState, action) => {
         }
     }
 };
+
+
+function editEmployee(state = initialState.employees, action) {
+    const data = action.payload;
+    const index = state.employees.findIndex(s => s.empId === data.empId)
+    if (index !== -1) {
+        const states = [...state.employees]
+        states[index] = data ? data : null;
+        return states;
+    } else {
+        return state;
+    }
+
+    return state;
+}

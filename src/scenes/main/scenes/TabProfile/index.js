@@ -12,7 +12,7 @@ import { genders, employeeStatusMap, maritalStatusMap }
     from '../../../../utils/lib/employeeHelpers';
 import { errorMessage } 
     from '../../../../utils/lib/constants';
-import { dispatchUpdateEmployees } 
+import { dispatchUpdateEmployee } 
     from '../../../../data/employees/actionCreators'
 
 class TabProfile extends Component {
@@ -39,8 +39,7 @@ class TabProfile extends Component {
     }
 
     onSave () {
-        debugger
-        dispatchUpdateEmployees(this.props)(this.state.employee);
+        dispatchUpdateEmployee(this.props)(this.state.employee);
     }
 
     componentWillReceiveProps(nextProps, nextState) {

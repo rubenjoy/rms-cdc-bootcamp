@@ -7,10 +7,24 @@ export const fetchEmployees = (employees) => {
     };
 };
 
-export const editEmployee = (employee) => {
-	return {
-		type: actionTypes.EDIT_EMPLOYEE,
+export const addEmployee = (employee) => {
+    return {
+        type: actionTypes.ADD_EMPLOYEE,
         payload: employee
+    };
+};
+
+export const editEmployee = (employee) => {
+    return {
+        type: actionTypes.EDIT_EMPLOYEE,
+        payload: employee
+    };
+};
+
+export const deleteEmployee = (id) => {
+	return {
+		type: actionTypes.DELETE_EMPLOYEE,
+        payload: id
 	};
 };
 

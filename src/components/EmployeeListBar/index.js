@@ -7,6 +7,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { connect } from 'react-redux';
 
 import EmployeeItem from '../EmployeeListItem';
+import EmployeeCreateDialog from '../EmployeeCreateDialog';
 
 import * as dummyEmployees 
     from '../../utils/dummy/employees';
@@ -26,8 +27,6 @@ class EmployeeListBar extends Component {
                 displayedList: dummyEmployees.employees
             }
         }
-
-        this.createDialog = null;
     }
 
     createNewEmployee = (newEmployee) => {
@@ -56,9 +55,13 @@ class EmployeeListBar extends Component {
         });
     }
 
+    openCreate() {
+        this.refs.createDialog.wrappedInstance.handleOpen();
+    }
+
     render() {
         const { displayedList, count, loading, pagingInfo, errorMessage, resetErrorMessage, setErrorMessage } = this.state.dummyEmployeeStore;
-      //  const { jobFamilies } = this.props.jobFamilyStore;
+        const { jobFamilies } = dummyEmployees.jobFamilies;
 
         return (
             <div id="employee-list">
@@ -67,8 +70,16 @@ class EmployeeListBar extends Component {
                 </List>
 
                 <FloatingActionButton mini={true} style={style}>
-                    <ContentAdd onClick={() => this.createDialog.handleOpen()} />
+                    <ContentAdd onClick={() => {this.openCreate()}} />
                 </FloatingActionButton>
+
+                <EmployeeCreateDialog id="create-dialog"
+                                      ref="createDialog"
+                                      jobFamilies={jobFamilies}
+                                      count={count}
+                                      createNewEmployee={this.createNewEmployee}
+                                      setErrorMessage={setErrorMessage}
+                />
             </div>
         );
     }

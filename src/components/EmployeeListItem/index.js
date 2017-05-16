@@ -10,7 +10,8 @@ import MenuItem from 'material-ui/MenuItem'
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as RMSActions from '../../data/employees/actionCreators';
+import { dispatchDeleteEmployee, setCurrentEmployee } 
+    from '../../data/employees/actionCreators'
 
 class EmployeeItem extends Component {
 
@@ -29,18 +30,19 @@ class EmployeeItem extends Component {
     }
 
     onSelectEmployee (employee) {
-      this.props.actions.setCurrentEmployee(employee);
+      setCurrentEmployee(this.props)(employee);
     }
 
-    onDeleteEmployee(id) {
-       // if (confirm("Are you sure to delete this employee: " + fullName)) {
-         //   deleteEmployee(id)
-      //  }
+    onDeleteEmployee(id, fullName) {
+       if (confirm("Are you sure to delete this employee: " + fullName)) {
+           debugger;
+           dispatchDeleteEmployee(this.props)(id);
+       }
     }
 
     render () {
         const employee = this.props.employee;
-        const isSelected = Number(employee.empId) === this.state.viewingEmpId;
+        const isSelected = false//Number(employee.empId) === this.state.viewingEmpId;
 
         const iconButtonElement = (
             <IconButton
@@ -68,8 +70,8 @@ class EmployeeItem extends Component {
                     primaryText={employee.firstName+' '+employee.lastName}
                     secondaryText={
                         <p>
-                            {(employee.grades.length > 0) ? employee.grades[0].grade : "N/A"}, {employee.division}<br />
-                            {(employee.officeLocations.length > 0 ) ? employee.officeLocations[0].officeLocation : "N/A"}, {employee.phone}
+                            {(employee.grades && employee.grades.length > 0) ? employee.grades[0].grade : "N/A"}, {employee.division}<br />
+                            {(employee.officeLocations && employee.officeLocations.length > 0 ) ? employee.officeLocations[0].officeLocation : "N/A"}, {employee.phone}
                         </p>
                     }
                     secondaryTextLines={2}
@@ -85,8 +87,4 @@ class EmployeeItem extends Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => (
-    {actions: bindActionCreators(RMSActions, dispatch)}
-)
-
-export default connect(null, mapDispatchToProps)(EmployeeItem)
+export default connect()(EmployeeItem)

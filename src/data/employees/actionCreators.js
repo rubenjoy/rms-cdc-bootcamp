@@ -1,6 +1,7 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee } from '../../utils/lib/employeeApiHelpers';
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee } 
+    from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
 
@@ -9,7 +10,6 @@ export const dispatchFetchEmployees = ({dispatch}) => {
         fetch(ENDPOINT_URL)
             .then(response => response.json())
             .then(json => {
-                debugger
                 dispatch(action.fetchEmployees(json._embedded.employees));
             })
             .catch(error => {
@@ -19,62 +19,50 @@ export const dispatchFetchEmployees = ({dispatch}) => {
     }
 };
 
+export const dispatchAddEmployee  = ({dispatch}) => {
+    return (employee, callback) => {
+            addEmployee(employee)
+            .then(response => response.json())
+            .then(json => {
+                dispatch(action.addEmployee(json));
+                dispatch(action.setCurrEmployee(json.empId));
+                if (callback && typeof callback === "function") callback();
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
+}
 
+export const dispatchDeleteEmployee  = ({dispatch}) => {
+    debugger;
+    return (id) => {
+             debugger
+            deleteEmployee(id)
+            .then(response => {
+                dispatch(action.deleteEmployee(id));
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
+}
 
-export const dispatchUpdateEmployees  = ({dispatch}) => {
+export const dispatchUpdateEmployee  = ({dispatch}) => {
     return (patchedEmployee) => {
             patchEmployee(patchedEmployee, patchedEmployee.empId, patchedEmployee.etag)
             .then(response => response.json())
             .then(json => {
                 dispatch(action.editEmployee(patchedEmployee));
-                dispatch(action.setCurrEmployee(patchedEmployee));
+                dispatch(action.setCurrEmployee(patchedEmployee.empId));
             })
-            .catch(() => {
-                debugger
-             //   this.setLoaded();
-             //   this.setErrorMessage(errorMessage.netError);
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
             });
     }
 }
-/*
-const loadSingleEmployee = (empId) => {
-    // console.log("load single employee " + empId);
 
-    let fetchedEmployee = {};
-    let success = true;
-  //  this.setLoading();
-
-    getEmployee(empId)
-        .then((response) => {
-            if (response.ok) {
-                fetchedEmployee.etag = response.headers.get("Etag");
-                return response.json();
-            } else {
-                success = false;
-              //  this.setErrorMessage(errorMessage.general);
-              //  this.setLoaded();
-            }
-        })
-        .catch(() => {
-            success = false;
-           // this.setLoaded();
-            //this.setErrorMessage(errorMessage.netError);
-        })
-        .then((json) => {
-            if (success) {
-                fetchedEmployee = {
-                    ...fetchedEmployee,
-                    ...json
-                }
-                // console.log("reading response: " + JSON.stringify(fetchedEmployee));
-                this.setCurrentEmployee(fetchedEmployee.empId);
-              //  this.replaceEmployee(fetchedEmployee);
-            }
-           // this.setLoaded();
-
-        })
-}*/
-
-export const setCurrentEmployee = (employee) => (dispatch) => (
-    dispatch(action.setCurrEmployee(employee))
-);
+export const setCurrentEmployee = ({dispatch}) => (employee) =>  dispatch(action.setCurrEmployee(employee))

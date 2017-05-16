@@ -46,6 +46,7 @@ class FormProfile extends Component {
         this.onSave = this.onSave.bind(this);
         this.setStateWithPropsInitialValue(props);
         this.handleChangeText = this.handleChangeText.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
 
     }
 
@@ -84,28 +85,27 @@ class FormProfile extends Component {
         this.props.updateState(profile);
     }
 
-    handleChangeSelect = (event, index, value, name) => this.setState({
-        profile: {
-            ...this.state.profile,
-            [name]: value
-        }})
+    handleChangeSelect = (event, index, value, name) => {
+        let profile = update(this.state.profile, {
+          [name]: {$set: value}
+        });
+        this.props.updateState(profile);
+    }
 
-    handleChangeDate = (event, date, name) => this.setState({
-        profile: {
-            ...this.state.profile,
-            [name]: date
-        }})
+    handleChangeDate = (event, date, name) => {
+        let profile = update(this.state.profile, {
+          [name]: {$set: date}
+        });
+        this.props.updateState(profile);
+    }
 
     handleChangeJobFamily = (event, index, value) => {
         const jf = this.props.jobFamilies.filter((j) => j.jfCode === value)
         const divisions = jf && jf.length > 0 ? jf[0].divisions : []
-        this.setState({
-            profile: {
-                ...this.state.profile,
-                jobFamily: value
-            },
-            divisions
-        })
+        let profile = update(this.state.profile, {
+          jobFamily: {$set: value}
+        });
+        this.props.updateState(profile);
     }
 
     handleChangeDivision = (event, index, value) => {
@@ -113,20 +113,18 @@ class FormProfile extends Component {
         const divisions = jf && jf.length > 0 ? jf[0].divisions : []
         const sdiv = divisions.filter((j) => j.divCode === value)
         const subDivisions = sdiv && sdiv.length > 0 ? sdiv[0].subDivisions : []
-        this.setState({
-            profile: {
-                ...this.state.profile,
-                division: value
-            },
-            subDivisions
-        })
+        let profile = update(this.state.profile, {
+          division: {$set: value}
+        });
+        this.props.updateState(profile);
     }
 
-    onRefreshSuspendDate = () => this.setState({
-        profile: {
-            ...this.state.profile,
-            suspendDate: null
-        }})
+    onRefreshSuspendDate = () => {
+        let profile = update(this.state.profile, {
+          suspendDate: {$set: null}
+        });
+        this.props.updateState(profile);
+    } 
 
     validateEmail () {
         let format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -155,17 +153,27 @@ class FormProfile extends Component {
         return isValid;
     }
 
+    validateMandatoryField2(employee) {
+        let isValid = true;
+        const profile  = employee;
+        if (profile.firstName === "" || profile.lastName === "" || profile.jobFamily === undefined
+            || profile.phone === "" || profile.email === "" || !this.validateEmail() || !this.validatePhone()) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     handleChangeAvatar = (event) => {
         // console.log("change avatar: " + event.target.files[0].name);
         let fReader = new FileReader();
         fReader.readAsDataURL(event.target.files[0]);
         fReader.onloadend = ((e) => {
             // console.log("fReader: " + e.target.result);
-            this.setState({
-                profile: {
-                    ...this.state.profile,
-                    avatar: e.target.result
-                }})
+            let profile = update(this.state.profile, {
+              avatar: {$set: e.target.result}
+            });
+            this.props.updateState(profile);
         });
     }
 
@@ -349,10 +357,14 @@ class FormProfile extends Component {
                         </Col>
                     </Row>
                 </Grid>
-                <div className="row" id="bottom-bar">
-                    <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
-                    <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.props.onCancel()}  />
-                </div>
+                {
+                    this.props.isPopup ? null : (
+                    <div className="row" id="bottom-bar">
+                        <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
+                        <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.props.onCancel()}  />
+                    </div>
+                    )
+                }
             </div>
         );
     }

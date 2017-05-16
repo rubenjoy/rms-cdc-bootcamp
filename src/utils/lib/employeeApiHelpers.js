@@ -47,7 +47,8 @@ export const searchEmployeesByName = (name, sortBy, pagingInfo) => {
     return fetch(`${empUrl}/search/findByName${createParam(pagingInfo, sortBy)}&name=${name}`);
 }
 
-export const removeEmployee = (empId) => {
+export const deleteEmployee = (empId) => {
+    debugger;
     return fetch(`${empUrl}/${empId}`, {
         method: "DELETE",
         headers: {

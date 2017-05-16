@@ -36,7 +36,6 @@ class EmployeeCreateDialog extends Component {
     }
 
     handleClose = () => {
-        debugger
         this.setState({open: false})
     }
 

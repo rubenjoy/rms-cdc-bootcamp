@@ -32,7 +32,6 @@ export const reducer = (state = initialState, action) => {
         }
         // Delete employee
         case actionTypes.DELETE_EMPLOYEE:{
-            debugger
             let index = state.employees.findIndex((x) => x.empId === action.payload); 
             return {
                 ...state,

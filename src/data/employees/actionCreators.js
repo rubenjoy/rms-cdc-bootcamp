@@ -22,11 +22,14 @@ export const dispatchFetchEmployees = ({dispatch}) => {
 export const dispatchAddEmployee  = ({dispatch}) => {
     return (employee, callback) => {
             addEmployee(employee)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) return response.json(); 
+                throw 'error';
+            })
             .then(json => {
-                dispatch(action.addEmployee(json));
-                dispatch(action.setCurrEmployee(json.empId));
-                if (callback && typeof callback === "function") callback();
+                    dispatch(action.addEmployee(json));
+                    dispatch(action.setCurrEmployee(json.empId));
+                    if (callback && typeof callback === "function") callback();
             })
             .catch(error => {
                 alert('Error occured');
@@ -36,12 +39,15 @@ export const dispatchAddEmployee  = ({dispatch}) => {
 }
 
 export const dispatchDeleteEmployee  = ({dispatch}) => {
-    debugger;
     return (id) => {
-             debugger
             deleteEmployee(id)
             .then(response => {
-                dispatch(action.deleteEmployee(id));
+                if (response.ok) {
+                    dispatch(action.deleteEmployee(id));
+                } else {
+                   alert('Error occured');
+                   console.log(response);
+                }
             })
             .catch(error => {
                 alert('Error occured');
@@ -53,7 +59,10 @@ export const dispatchDeleteEmployee  = ({dispatch}) => {
 export const dispatchUpdateEmployee  = ({dispatch}) => {
     return (patchedEmployee) => {
             patchEmployee(patchedEmployee, patchedEmployee.empId, patchedEmployee.etag)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok)  return response.json()
+                throw 'error occured';
+            })
             .then(json => {
                 dispatch(action.editEmployee(patchedEmployee));
                 dispatch(action.setCurrEmployee(patchedEmployee.empId));
@@ -65,4 +74,4 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
     }
 }
 
-export const setCurrentEmployee = ({dispatch}) => (employee) =>  dispatch(action.setCurrEmployee(employee))
+export const setCurrentEmployee = ({dispatch}) => (employee) => dispatch(action.setCurrEmployee(employee)) 

@@ -35,7 +35,6 @@ class EmployeeItem extends Component {
 
     onDeleteEmployee(id, fullName) {
        if (confirm("Are you sure to delete this employee: " + fullName)) {
-           debugger;
            dispatchDeleteEmployee(this.props)(id);
        }
     }
@@ -75,7 +74,7 @@ class EmployeeItem extends Component {
                         </p>
                     }
                     secondaryTextLines={2}
-                    onTouchTap={() => this.onSelectEmployee(employee)}
+                    onTouchTap={() => this.onSelectEmployee(employee.empId)}
                     rightIconButton={rightIconMenu(employee.empId, employee.firstName+' '+employee.lastName)}
                 />
                 <Divider style={dividerStyle}  />

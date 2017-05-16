@@ -48,7 +48,6 @@ export const searchEmployeesByName = (name, sortBy, pagingInfo) => {
 }
 
 export const deleteEmployee = (empId) => {
-    debugger;
     return fetch(`${empUrl}/${empId}`, {
         method: "DELETE",
         headers: {

@@ -64,7 +64,7 @@ class TabProfile extends Component {
     render () {
         return (
             <div>
-                { this.state.dummyCount > 0 ?
+                { this.state.employee && this.state.employee.email ?
                         <FormProfile initialValues={this.state.employee}
                                  jobFamilies={this.state.jobFamilies}
                                  updateState={this.updateEmployeeForm}

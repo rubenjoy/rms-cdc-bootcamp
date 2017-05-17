@@ -10,6 +10,10 @@ const initialState = {
 // Process the data based on action taken (immutable)
 export const reducer = (state = initialState, action) => {
     switch(action.type) {
+        // Get employees
+        case actionTypes.GET_EMPLOYEES:{
+            return [...state.employees];
+        }
         // On fetch
         case actionTypes.FETCH_EMPLOYEES:{
             return {

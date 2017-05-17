@@ -1,6 +1,6 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest } 
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects } 
     from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
@@ -69,7 +69,7 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
             })
             .catch(error => {
                 alert('Error occured');
-                console.log(error)
+                console.log(error);
             });
     }
 }
@@ -104,3 +104,23 @@ export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
         dispatch(setCurrentEmployee(empId));
     });
 }
+
+
+
+export const dispatchUpdateProjects = ({dispatch}) => (newProjects, histForm, employee) => {
+        debugger
+        //this.setLoading();
+        putProjects(newProjects, employee.empId, employee.etag)
+            .then((response) => {
+                if (response.ok) {
+                 setCurrEmployee(dispatch, employee.empId);
+                 //   if (histForm) histForm.setState({editMode: false});
+                } else {
+                  //  this.setErrorMessage(errorMessage.general);
+                }
+            })
+            .catch((error) => {
+                alert('Error occured');
+                console.log(error);
+            });
+    }

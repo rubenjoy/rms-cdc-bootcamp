@@ -13,7 +13,7 @@ import { genders, employeeStatusMap, maritalStatusMap }
 import { errorMessage } 
     from '../../../../utils/lib/constants';
 import { dispatchUpdateEmployee } 
-    from '../../../../data/employees/actionCreators'
+    from '../../../../data/employees/actionCreators';
 
 class TabProfile extends Component {
 
@@ -22,16 +22,16 @@ class TabProfile extends Component {
         this.onSave = this.onSave.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.state = {
-            employee : {},
+            employee : props.currentEmployee ? props.currentEmployee : {},
             employeeStore: dummy.employees,
             jobFamilies: dummy.jobFamilies,
             dummyViewingEmpId: 0,
             dummyCount: 1
         }
-
+        debugger
         this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
-
-        this.getInitialEmployee(props);
+        this.getInitialEmployee = this.getInitialEmployee.bind(this);
+       // this.getInitialEmployee(props);
     }
 
     onCancel () {
@@ -54,12 +54,12 @@ class TabProfile extends Component {
 
     getInitialEmployee (props) {
         let employee = props.currentEmployee ? props.currentEmployee : {};
-        this.setState({employee});
+        this.setState({employee: employee});
     }
 
     render () {
         return (
-            <div>
+            <div className="tab-profile">
                 { this.state.employee && this.state.employee.email ?
                         <FormProfile initialValues={this.state.employee}
                                  jobFamilies={this.state.jobFamilies}
@@ -77,6 +77,6 @@ class TabProfile extends Component {
 export default connect((state) => {
   return {
     employees: state.employees.employees,
-    currentEmployee: state.employees.currentEmployee
+    currentEmployee: state.currentEmployee
   }
 })(muiThemeable()(TabProfile))

@@ -28,8 +28,8 @@ class EmployeeItem extends Component {
         this.onSelectEmployee = this.onSelectEmployee.bind(this);
     }
 
-    onSelectEmployee (employee) {
-      this.props.actions.setCurrentEmployee(employee);
+    onSelectEmployee (empId) {
+        this.props.actions.setCurrentEmployee(empId);
     }
 
     onDeleteEmployee(id) {
@@ -73,7 +73,7 @@ class EmployeeItem extends Component {
                         </p>
                     }
                     secondaryTextLines={2}
-                    onTouchTap={() => this.onSelectEmployee(employee)}
+                    onTouchTap={() => this.onSelectEmployee(employee.empId)}
                     rightIconButton={rightIconMenu(employee.empId, employee.firstName+' '+employee.lastName)}
                 />
                 <Divider style={dividerStyle}  />

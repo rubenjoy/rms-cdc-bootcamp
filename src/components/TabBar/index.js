@@ -22,6 +22,7 @@ class TabBar extends Component {
     render () {
         let path = location;
         if (path === "/") path = "/profile";
+//        if (path === "/") path = "/grades";
 
         return (
             <div id="tabs">

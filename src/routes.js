@@ -1,6 +1,7 @@
 // We only need to import the modules necessary for initial render
 import AppLayout from './layouts/AppLayout'
 import TabProfile from './scenes/main/scenes/TabProfile'
+import TabGrade from './scenes/main/scenes/TabGrade'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -13,6 +14,10 @@ export const createRoutes = (store) => ({
     {
       path: '/profile',
       component: TabProfile
+    },
+    {
+      path: '/grades',
+      component: TabGrade
     }
   ]
 })

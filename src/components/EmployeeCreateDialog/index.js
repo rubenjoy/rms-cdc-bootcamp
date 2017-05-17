@@ -52,6 +52,7 @@ class EmployeeCreateDialog extends Component {
             if (this.refs.formProfile.validateMandatoryField2(this.state.employee)) {
             
               dispatchAddEmployee(this.props, this.handleClose())(this.state.employee);
+              this.resetEmployeeForm();
             }
         }
     }
@@ -60,7 +61,9 @@ class EmployeeCreateDialog extends Component {
         this.setState({employee: newForm});
     }
 
-
+    resetEmployeeForm() {
+        this.setState({employee: {}});
+    }
 
     render() {
 

@@ -1,6 +1,6 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee, addEmployee, deleteEmployee } 
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest } 
     from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
@@ -28,7 +28,7 @@ export const dispatchAddEmployee  = ({dispatch}) => {
             })
             .then(json => {
                     dispatch(action.addEmployee(json));
-                    dispatch(action.setCurrEmployee(json.empId));
+                    setCurrEmployee(dispatch, json.empId);
                     if (callback && typeof callback === "function") callback();
             })
             .catch(error => {
@@ -65,7 +65,7 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
             })
             .then(json => {
                 dispatch(action.editEmployee(patchedEmployee));
-                dispatch(action.setCurrEmployee(patchedEmployee.empId));
+                setCurrEmployee(dispatch, patchedEmployee.empId);
             })
             .catch(error => {
                 alert('Error occured');
@@ -74,4 +74,33 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
     }
 }
 
-export const setCurrentEmployee = ({dispatch}) => (employee) => dispatch(action.setCurrEmployee(employee)) 
+export const setCurrentEmployee = ({dispatch}) => (empId) => {
+    setCurrEmployee(dispatch, empId);
+}
+
+const setCurrEmployee = (dispatch, empId) => {
+    let fetchedEmployee = {}
+    getEmployee(empId)
+        .then ((response) => {
+            if(response.ok){
+                fetchedEmployee.etag = response.headers.get("Etag");
+                return response.json();
+            }
+        })
+        .then((json) => {
+            fetchedEmployee = {
+                ...fetchedEmployee,
+                ...json
+            }
+            dispatch(action.setCurrEmployee(fetchedEmployee));
+        });
+}
+
+export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
+    const path = `${ENDPOINT_URL}/${empId}/grades`;
+    setupRequest(path, etag, newGrades)
+    .then(() => {
+        /** update currentEmployee store after update grade to get new etag */
+        dispatch(setCurrentEmployee(empId));
+    });
+}

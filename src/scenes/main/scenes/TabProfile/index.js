@@ -53,11 +53,7 @@ class TabProfile extends Component {
     }
 
     getInitialEmployee (props) {
-        let {employees} = props;
-
-        let employee = employees && employees.length > 0 ? 
-            _.find(employees, {empId: props.currentEmployee}) : {};
-
+        let employee = props.currentEmployee ? props.currentEmployee : {};
         this.setState({employee});
     }
 

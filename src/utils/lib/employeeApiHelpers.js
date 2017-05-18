@@ -1,7 +1,7 @@
 import { createParam } from './employeeHelpers';
 
 export const empUrl = process.env.REACT_APP_API_URL ?
-    process.env.REACT_APP_API_URL : 'https://rmsbackendspringstaging.herokuapp.com' +'/employees'; //TODO: get from config samting
+    process.env.REACT_APP_API_URL : 'https://rmsbackendspringstaging.herokuapp.com/employees'; //TODO: get from config samting
 
 export const addEmployee = (newEmployee) => {
     return fetch(empUrl, {

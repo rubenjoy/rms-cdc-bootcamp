@@ -28,6 +28,13 @@ export const deleteEmployee = (id) => {
 	};
 };
 
+export const getEmployee = (id) => {
+    return {
+        type: actionTypes.GET_EMPLOYEE,
+        payload: id
+    };
+};
+
 // will be called when user clicks the employee on the list
 export const setCurrEmployee = (employee) => {
     return{

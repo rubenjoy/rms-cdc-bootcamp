@@ -11,6 +11,7 @@ import EmployeeCreateDialog from '../EmployeeCreateDialog';
 
 import * as dummyEmployees 
     from '../../utils/dummy/employees';
+import './index.css' ;
 
 
 const style = {
@@ -69,10 +70,9 @@ class EmployeeListBar extends Component {
                     {this.renderEmployees()}
                 </List>
 
-                <FloatingActionButton mini={true} style={style}>
+                <FloatingActionButton id="add-button" mini={true} style={style}>
                     <ContentAdd onClick={() => {this.openCreate()}} />
                 </FloatingActionButton>
-
                 <EmployeeCreateDialog id="create-dialog"
                                       ref="createDialog"
                                       jobFamilies={jobFamilies}

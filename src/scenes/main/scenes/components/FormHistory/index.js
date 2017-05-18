@@ -13,6 +13,7 @@ import { errorMessage }
     from '../../../../../utils/lib/constants'
 import { generateProjectId }
     from '../../../../../utils/lib/employeeHelpers';
+import './index.css' ;
 
 const buttonStyle = {
     float: "right",
@@ -83,12 +84,11 @@ class FormHistory extends Component {
     }
 
     saveEditProjects() {
-
         const { setErrorMessage, onSave } = this.props;
         // console.log("this.state.projects: " + JSON.stringify(this.state.projects));
 
         if (this.validateProjects()) {
-            onSave(this.state.projects);
+            onSave(this.state.projects, this.props.currentEmployee);
         }
         else {
             setErrorMessage(errorMessage.fieldValidation);
@@ -223,8 +223,8 @@ class FormHistory extends Component {
         const { projects, editMode } = this.state;
 
         return (
-            <div id="tab-history">
-                <Grid fluid={true}>
+            <div className="tab-history">
+                <Grid fluid={true} id="tab-history-grid">
                 {projects.map((item, index) => (
                     <Row key={index}>
                         {editMode ? <FontIcon className="fa fa-trash fa-1"

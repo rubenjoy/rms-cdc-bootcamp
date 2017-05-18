@@ -13,7 +13,7 @@ import { genders, employeeStatusMap, maritalStatusMap }
 import { errorMessage } 
     from '../../../../utils/lib/constants';
 import { dispatchUpdateEmployee } 
-    from '../../../../data/employees/actionCreators'
+    from '../../../../data/employees/actionCreators';
 
 class TabProfile extends Component {
 
@@ -21,17 +21,17 @@ class TabProfile extends Component {
         super();
         this.onSave = this.onSave.bind(this);
         this.onCancel = this.onCancel.bind(this);
+        debugger
         this.state = {
-            employee : {},
+            employee : props.currentEmployee ? props.currentEmployee : {},
             employeeStore: dummy.employees,
             jobFamilies: dummy.jobFamilies,
             dummyViewingEmpId: 0,
             dummyCount: 1
         }
-
         this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
-
-        this.getInitialEmployee(props);
+        this.getInitialEmployee = this.getInitialEmployee.bind(this);
+       // this.getInitialEmployee(props);
     }
 
     onCancel () {
@@ -43,6 +43,7 @@ class TabProfile extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextState) {
+        debugger
         this.getInitialEmployee(nextProps);
         return true;
     }
@@ -53,17 +54,13 @@ class TabProfile extends Component {
     }
 
     getInitialEmployee (props) {
-        let {employees} = props;
-
-        let employee = employees && employees.length > 0 ? 
-            _.find(employees, {empId: props.currentEmployee}) : {};
-
-        this.setState({employee});
+        let employee = props.currentEmployee ? props.currentEmployee : {};
+        this.setState({employee: employee});
     }
 
     render () {
         return (
-            <div>
+            <div className="tab-profile">
                 { this.state.employee && this.state.employee.email ?
                         <FormProfile initialValues={this.state.employee}
                                  jobFamilies={this.state.jobFamilies}

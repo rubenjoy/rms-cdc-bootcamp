@@ -89,3 +89,15 @@ export const putLocations = (newLocations, empId, etag) => {
 
     return putRequest(`${empUrl}/${empId}/locations`, etag, newLocations);
 }
+
+export const setupRequest = (path, etag, body) => {
+    return fetch(path, {
+        method: "PUT",
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json",
+            'If-Match': etag
+        },
+        body: JSON.stringify(body)
+    });
+}

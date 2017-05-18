@@ -101,7 +101,7 @@ export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
     setupRequest(path, etag, newGrades)
     .then(() => {
         /** update currentEmployee store after update grade to get new etag */
-        dispatch(setCurrentEmployee(empId));
+        setCurrEmployee(dispatch,empId);
     });
 }
 

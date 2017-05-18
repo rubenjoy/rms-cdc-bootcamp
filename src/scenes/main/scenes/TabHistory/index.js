@@ -30,7 +30,6 @@ class TabHistory extends Component {
 
         let histForm = null;
         const onSaveProjects = (newProjects, currentEmployee) => {
-            debugger
             dispatchUpdateProjects(this.props)(newProjects, histForm, currentEmployee);
         }
 

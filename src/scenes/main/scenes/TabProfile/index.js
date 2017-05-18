@@ -21,6 +21,7 @@ class TabProfile extends Component {
         super();
         this.onSave = this.onSave.bind(this);
         this.onCancel = this.onCancel.bind(this);
+        debugger
         this.state = {
             employee : props.currentEmployee ? props.currentEmployee : {},
             employeeStore: dummy.employees,
@@ -28,7 +29,6 @@ class TabProfile extends Component {
             dummyViewingEmpId: 0,
             dummyCount: 1
         }
-        debugger
         this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
         this.getInitialEmployee = this.getInitialEmployee.bind(this);
        // this.getInitialEmployee(props);
@@ -43,6 +43,7 @@ class TabProfile extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextState) {
+        debugger
         this.getInitialEmployee(nextProps);
         return true;
     }
@@ -77,6 +78,6 @@ class TabProfile extends Component {
 export default connect((state) => {
   return {
     employees: state.employees.employees,
-    currentEmployee: state.currentEmployee
+    currentEmployee: state.employees.currentEmployee
   }
 })(muiThemeable()(TabProfile))

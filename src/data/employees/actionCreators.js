@@ -108,7 +108,6 @@ export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
 
 
 export const dispatchUpdateProjects = ({dispatch}) => (newProjects, histForm, employee) => {
-        debugger
         //this.setLoading();
         putProjects(newProjects, employee.empId, employee.etag)
             .then((response) => {

@@ -84,7 +84,6 @@ class FormHistory extends Component {
     }
 
     saveEditProjects() {
-        debugger
         const { setErrorMessage, onSave } = this.props;
         // console.log("this.state.projects: " + JSON.stringify(this.state.projects));
 

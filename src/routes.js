@@ -23,7 +23,7 @@ export const createRoutes = (store) => ({
       component: TabHistory
     },
     {
-      path: '/grade',
+      path: '/grades',
       component: TabGrade
     }
   ]

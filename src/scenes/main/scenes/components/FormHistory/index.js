@@ -14,6 +14,7 @@ import { errorMessage }
 import { generateProjectId }
     from '../../../../../utils/lib/employeeHelpers';
 import './index.css' ;
+import 'font-awesome/css/font-awesome.css';
 
 const buttonStyle = {
     float: "right",

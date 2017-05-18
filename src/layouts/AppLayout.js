@@ -9,9 +9,6 @@ import BarContent from '../components/BarContent';
 import './AppLayout.css' ;
 
 class App extends Component {
-    constructor () {
-        super();
-    }
 
     render () { 
         return (

@@ -87,6 +87,4 @@ function editEmployee(state = initialState.employees, action) {
     } else {
         return state;
     }
-
-    return state;
 }

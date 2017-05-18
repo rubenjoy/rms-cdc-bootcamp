@@ -25,7 +25,6 @@ class TabHistory extends Component {
         const setErrorMessage = () => {}
         const viewingEmpId = 1;
         const count = 1;
-        const updateProjects = () => {}
         const projects = sortedHistory ? sortedHistory : [];
 
         let histForm = null;

@@ -9,7 +9,6 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import { dispatchDeleteEmployee, setCurrentEmployee } 
     from '../../data/employees/actionCreators'
 

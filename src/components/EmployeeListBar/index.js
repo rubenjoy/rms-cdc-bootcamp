@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { List } from 'material-ui/List';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import {Pagination} from 'react-bootstrap';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { connect } from 'react-redux';
 
@@ -61,7 +60,7 @@ class EmployeeListBar extends Component {
     }
 
     render() {
-        const { displayedList, count, loading, pagingInfo, errorMessage, resetErrorMessage, setErrorMessage } = this.state.dummyEmployeeStore;
+        const {  count, setErrorMessage } = this.state.dummyEmployeeStore;
         const { jobFamilies } = dummyEmployees.jobFamilies;
 
         return (

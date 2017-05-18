@@ -30,8 +30,6 @@ const fabStyle = {
 const buttomBar = {
   backgroundColor: '#5c6bc0',
   height: '48px',
-  marginRight: '20px',
-  marginLeft: '20px',
   marginTop: '40px'
 }
 
@@ -63,7 +61,7 @@ class FormGrade extends Component {
     validateMandatoryField (newGrades){
       let isValid = true;
       newGrades.map((grade)=>{
-        if (grade.ds == 0 || grade.startDate == null){
+        if (grade.ds === 0 || grade.startDate === null){
           isValid = false
         }
       })

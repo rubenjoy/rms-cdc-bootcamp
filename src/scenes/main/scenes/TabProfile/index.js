@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import NoEmployee from '../components/NoEmployee';
 import FormProfile from '../components/FormProfile';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-
 import { connect } from 'react-redux';
 import _ from 'lodash';
+
+import NoData from '../components/NoData';
 import * as dummy
     from '../../../../utils/dummy/employees';
 import { dispatchUpdateEmployee } 
@@ -61,7 +61,7 @@ class TabProfile extends Component {
                                  onSave={this.onSave}
                                  onCancel={this.onCancel}
                         />
-                    : <NoEmployee/> }
+                    : <NoData/> }
             </div>
         );
     }

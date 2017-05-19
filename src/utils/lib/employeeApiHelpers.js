@@ -20,7 +20,8 @@ export const patchEmployee = (patchedEmployee, empId, etag) => {
         method: "PATCH",
         headers: {
             "Accept": "application/json",
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            'If-Match': etag
         },
         body: JSON.stringify(patchedEmployee)
     });

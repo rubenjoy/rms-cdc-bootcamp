@@ -101,7 +101,7 @@ export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
     setupRequest(path, etag, newGrades)
     .then(() => {
         /** update currentEmployee store after update grade to get new etag */
-        dispatch(setCurrentEmployee(empId));
+        setCurrEmployee(dispatch,empId);
     });
 }
 
@@ -122,3 +122,12 @@ export const dispatchUpdateProjects = ({dispatch}) => (newProjects, histForm, em
                 console.log(error);
             });
     }
+
+ export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch) =>{
+    const path = `${ENDPOINT_URL}/${empId}/family`;
+    setupRequest(path, etag, newFamilyMembers)
+    .then(() => {
+        /** update currentEmployee store after update grade to get new etag */
+        setCurrEmployee(dispatch,empId);
+    });
+}

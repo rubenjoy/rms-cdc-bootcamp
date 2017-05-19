@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
-import AvSortByAlpha from 'material-ui/svg-icons/av/sort-by-alpha';
 import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
 import AVPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 import FontIcon from 'material-ui/FontIcon';

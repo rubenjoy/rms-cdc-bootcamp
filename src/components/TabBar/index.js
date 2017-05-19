@@ -6,18 +6,13 @@ import WC from 'material-ui/svg-icons/notification/wc'
 import History from 'material-ui/svg-icons/action/history';
 import Location from 'material-ui/svg-icons/communication/location-on';
 import Home from 'material-ui/svg-icons/action/home';
-import FontIcon from 'material-ui/FontIcon'
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
 const styles = {
     backgroundColor: "#5c6bc0"
 }
 
 class TabBar extends Component {
-
-    constructor () {
-        super()
-    }
 
     render () {
         let path = location;

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import NoEmployee from '../components/NoEmployee';
 import RaisedButton from 'material-ui/RaisedButton';
 import FormGrade from '../components/FormGrade';
 

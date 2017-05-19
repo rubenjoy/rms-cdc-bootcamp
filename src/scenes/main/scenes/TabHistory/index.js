@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import FormHistory from '../components/FormHistory';
-import NoEmployee from '../components/NoEmployee';
+import NoData from '../components/NoData';
 import * as dummyEmployees 
     from '../../../../utils/dummy/employees';
 import { dispatchUpdateProjects } 
@@ -24,9 +24,8 @@ class TabHistory extends Component {
         const sortedHistory = currentEmployee && currentEmployee.projects ? currentEmployee.projects : [];
         const setErrorMessage = () => {}
         const viewingEmpId = 1;
-        const count = 1;
-        const updateProjects = () => {}
         const projects = sortedHistory ? sortedHistory : [];
+        const count = projects ? projects.length : 0;
 
         let histForm = null;
         const onSaveProjects = (newProjects, currentEmployee) => {
@@ -42,7 +41,7 @@ class TabHistory extends Component {
                                  setErrorMessage={setErrorMessage}
                                  viewingEmpId={viewingEmpId ? viewingEmpId : 0}
                                  ref={(form) => histForm = form}
-                    /> : <NoEmployee/> }
+                    /> : <NoData text={'No History'}/> }
             </div>
         );
 

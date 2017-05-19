@@ -14,6 +14,7 @@ import { errorMessage }
 import { generateProjectId }
     from '../../../../../utils/lib/employeeHelpers';
 import './index.css' ;
+import 'font-awesome/css/font-awesome.css';
 
 const buttonStyle = {
     float: "right",
@@ -248,7 +249,7 @@ class FormHistory extends Component {
                                             onChange={(event, date) =>  this.handleChangeDate(event, date, "endDate", item.projectId)}
                                             disabled={!editMode}
                                             textFieldStyle={{width: "70%"}}
-                                            style={{position: "absolute", marginTop: -48, marginLeft: 100, zIndex: 2}}
+                                            style={{position: "absolute", marginTop: -48, marginLeft: 110, zIndex: 2}}
                                 />
                             </div>
                             <div id="year">

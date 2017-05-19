@@ -2,6 +2,7 @@
 import AppLayout from './layouts/AppLayout'
 import TabProfile from './scenes/main/scenes/TabProfile'
 import TabHistory from './scenes/main/scenes/TabHistory'
+import TabAddress from './scenes/main/scenes/TabAddress'
 import TabGrade from './scenes/main/scenes/TabGrade'
 import TabFamily from './scenes/main/scenes/TabFamily'
 
@@ -30,6 +31,10 @@ export const createRoutes = (store) => ({
     {
       path: '/family',
       component: TabFamily
+    },
+    {
+      path: '/address',
+      component: TabAddress
     }
   ]
 })

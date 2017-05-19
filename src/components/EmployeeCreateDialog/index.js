@@ -3,7 +3,6 @@ import Dialog from 'material-ui/Dialog';
 import FormProfile 
     from '../../scenes/main/scenes/components/FormProfile';
 import FlatButton from 'material-ui/FlatButton';
-import { errorMessage } from '../../utils/lib/constants';
 
 
 import { connect } from 'react-redux';
@@ -46,7 +45,6 @@ class EmployeeCreateDialog extends Component {
     }
 
     onCreate() {
-        const { setErrorMessage, createNewEmployee } = this.props;
 
         if (this.refs.formProfile) {
             if (this.refs.formProfile.validateMandatoryField2(this.state.employee)) {
@@ -66,8 +64,6 @@ class EmployeeCreateDialog extends Component {
     }
 
     render() {
-
-        const { jobFamilies } = this.props;
 
         const actions = [
             <FlatButton

@@ -9,10 +9,6 @@ class AppContainer extends Component {
     store  : PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount() {
     // Initializing employee list when empty
     if (this.props.store.getState().employees.employees.length === 0) {

@@ -1,10 +1,11 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import {fade} from 'material-ui/utils/colorManipulator'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {fade} from 'material-ui/utils/colorManipulator';
 import ReactDOM from 'react-dom';
-import AppContainer from './containers/AppContainer'
-import store from './data/store'
+import AppContainer from './containers/AppContainer';
+import store from './data/store';
+import createRoutes from './routes';
 
 // Fixing error for unknown prop of "onTouchTap"
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -43,7 +44,7 @@ const muiTheme = getMuiTheme({
     }
 });
 
-const routes = require('./routes').default(store);
+const routes = createRoutes(store);
 
 ReactDOM.render(
     <MuiThemeProvider muiTheme={muiTheme}>

@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
-import NoEmployee from '../components/NoEmployee';
 import FormProfile from '../components/FormProfile';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-import {bindActionCreators} from 'redux';
-
 import { connect } from 'react-redux';
 import _ from 'lodash';
+
+import NoData from '../components/NoData';
 import * as dummy
     from '../../../../utils/dummy/employees';
-import { genders, employeeStatusMap, maritalStatusMap } 
-    from '../../../../utils/lib/employeeHelpers';
-import { errorMessage } 
-    from '../../../../utils/lib/constants';
 import { dispatchUpdateEmployee } 
     from '../../../../data/employees/actionCreators';
 
@@ -21,7 +16,6 @@ class TabProfile extends Component {
         super();
         this.onSave = this.onSave.bind(this);
         this.onCancel = this.onCancel.bind(this);
-        debugger
         this.state = {
             employee : props.currentEmployee ? props.currentEmployee : {},
             employeeStore: dummy.employees,
@@ -43,7 +37,6 @@ class TabProfile extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextState) {
-        debugger
         this.getInitialEmployee(nextProps);
         return true;
     }
@@ -68,7 +61,7 @@ class TabProfile extends Component {
                                  onSave={this.onSave}
                                  onCancel={this.onCancel}
                         />
-                    : <NoEmployee/> }
+                    : <NoData/> }
             </div>
         );
     }

@@ -67,9 +67,9 @@ class FormProfile extends Component {
                     email: initialValues.email ? initialValues.email : "",
                     nationality: initialValues.nationality ? initialValues.nationality : ""
                 },
-                currentGrade,
-                divisions,
-                subDivisions
+                currentGrade: currentGrade,
+                divisions: divisions,
+                subDivisions: subDivisions
             };
         }
     }
@@ -100,8 +100,6 @@ class FormProfile extends Component {
     }
 
     handleChangeJobFamily = (event, index, value) => {
-        const jf = this.props.jobFamilies.filter((j) => j.jfCode === value)
-        const divisions = jf && jf.length > 0 ? jf[0].divisions : []
         let profile = update(this.state.profile, {
           jobFamily: {$set: value}
         });
@@ -109,10 +107,6 @@ class FormProfile extends Component {
     }
 
     handleChangeDivision = (event, index, value) => {
-        const jf = this.props.jobFamilies.filter((j) => j.jfCode === this.state.profile.jobFamily)
-        const divisions = jf && jf.length > 0 ? jf[0].divisions : []
-        const sdiv = divisions.filter((j) => j.divCode === value)
-        const subDivisions = sdiv && sdiv.length > 0 ? sdiv[0].subDivisions : []
         let profile = update(this.state.profile, {
           division: {$set: value}
         });
@@ -127,7 +121,7 @@ class FormProfile extends Component {
     } 
 
     validateEmail () {
-        let format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let format = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
         return this.state.profile.email.match(format);
     }
 
@@ -373,7 +367,7 @@ class FormProfile extends Component {
 FormProfile.propTypes = {
     initialValues: React.PropTypes.object,
     currentGrade: React.PropTypes.string,
-    jobFamilies: React.PropTypes.object.isRequired
+    jobFamilies: React.PropTypes.array.isRequired
 };
 
 export default FormProfile

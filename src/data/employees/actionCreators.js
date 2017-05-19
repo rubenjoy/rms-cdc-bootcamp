@@ -17,14 +17,32 @@ export const dispatchFetchEmployees = ({dispatch}) => {
                 console.log(error)
             });
     }
-};
+}; 
+
+const setCurrEmployee = (dispatch, empId) => {
+    let fetchedEmployee = {}
+    getEmployee(empId)
+        .then ((response) => {
+            if(response.ok){
+                fetchedEmployee.etag = response.headers.get("Etag");
+                return response.json();
+            }
+        })
+        .then((json) => {
+            fetchedEmployee = {
+                ...fetchedEmployee,
+                ...json
+            }
+            dispatch(action.setCurrEmployee(fetchedEmployee));
+        });
+}
 
 export const dispatchAddEmployee  = ({dispatch}) => {
     return (employee, callback) => {
             addEmployee(employee)
             .then(response => {
                 if (response.ok) return response.json(); 
-                throw 'error';
+                throw new Error("error");
             })
             .then(json => {
                     dispatch(action.addEmployee(json));
@@ -60,8 +78,8 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
     return (patchedEmployee) => {
             patchEmployee(patchedEmployee, patchedEmployee.empId, patchedEmployee.etag)
             .then(response => {
-                if (response.ok)  return response.json()
-                throw 'error occured';
+                if (response.ok)  return response.json();
+                throw new Error("error");
             })
             .then(json => {
                 dispatch(action.editEmployee(patchedEmployee));
@@ -76,24 +94,6 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
 
 export const setCurrentEmployee = ({dispatch}) => (empId) => {
     setCurrEmployee(dispatch, empId);
-}
-
-const setCurrEmployee = (dispatch, empId) => {
-    let fetchedEmployee = {}
-    getEmployee(empId)
-        .then ((response) => {
-            if(response.ok){
-                fetchedEmployee.etag = response.headers.get("Etag");
-                return response.json();
-            }
-        })
-        .then((json) => {
-            fetchedEmployee = {
-                ...fetchedEmployee,
-                ...json
-            }
-            dispatch(action.setCurrEmployee(fetchedEmployee));
-        });
 }
 
 export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
@@ -113,9 +113,8 @@ export const dispatchUpdateProjects = ({dispatch}) => (newProjects, histForm, em
             .then((response) => {
                 if (response.ok) {
                  setCurrEmployee(dispatch, employee.empId);
-                 //   if (histForm) histForm.setState({editMode: false});
                 } else {
-                  //  this.setErrorMessage(errorMessage.general);
+                  new Error("error");
                 }
             })
             .catch((error) => {

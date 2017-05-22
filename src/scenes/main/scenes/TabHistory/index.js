@@ -1,46 +1,38 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 
 import FormHistory from '../components/FormHistory';
 import NoData from '../components/NoData';
-import * as dummyEmployees 
-    from '../../../../utils/dummy/employees';
 import { dispatchUpdateProjects } 
     from '../../../../data/employees/actionCreators';
 
 class TabHistory extends Component {
 
-    constructor () {
-        super();
-        this.state = {
-            employeeStore: dummyEmployees,
-            dummyViewingEmpId: 0,
-            dummyCount: 1
-        }
+    constructor (props) {
+        super(props);
+        this.onSaveProjects = this.onSaveProjects.bind(this);
+    }
+
+    onSaveProjects(newProjects, currentEmployee){
+        dispatchUpdateProjects(this.props)(newProjects, currentEmployee);
     }
 
     render () {
         const {currentEmployee} = this.props;
+        const viewingEmpId = currentEmployee.empId;
         const sortedHistory = currentEmployee && currentEmployee.projects ? currentEmployee.projects : [];
         const setErrorMessage = () => {}
-        const viewingEmpId = 1;
         const projects = sortedHistory ? sortedHistory : [];
-        const count = projects ? projects.length : 0;
-
-        let histForm = null;
-        const onSaveProjects = (newProjects, currentEmployee) => {
-            dispatchUpdateProjects(this.props)(newProjects, histForm, currentEmployee);
-        }
 
         return (
             <div>
-                { count > 0 ?
+                { !_.isEmpty(currentEmployee)?
                     <FormHistory projects={projects}
-                                 onSave={onSaveProjects}
+                                 onSave={this.onSaveProjects}
                                  currentEmployee={currentEmployee}
                                  setErrorMessage={setErrorMessage}
                                  viewingEmpId={viewingEmpId ? viewingEmpId : 0}
-                                 ref={(form) => histForm = form}
                     /> : <NoData text={'No History'}/> }
             </div>
         );

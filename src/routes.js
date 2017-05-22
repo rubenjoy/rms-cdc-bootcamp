@@ -5,6 +5,7 @@ import TabHistory from './scenes/main/scenes/TabHistory'
 import TabAddress from './scenes/main/scenes/TabAddress'
 import TabGrade from './scenes/main/scenes/TabGrade'
 import TabFamily from './scenes/main/scenes/TabFamily'
+import TabLocation from './scenes/main/scenes/TabLocation'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -35,6 +36,10 @@ export const createRoutes = (store) => ({
     {
       path: '/address',
       component: TabAddress
+    },
+    {
+      path: '/locations',
+      component: TabLocation
     }
   ]
 })

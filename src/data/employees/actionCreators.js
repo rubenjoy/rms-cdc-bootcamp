@@ -1,9 +1,12 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects, putLocations } 
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects, putLocations,
+         searchEmployeesByName } 
     from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
+const Paging_Info = 10;
+const Sort_By = [ { sortBy: "dateAdded", sortType: "desc" } ];
 
 export const dispatchFetchEmployees = ({dispatch}) => {
     return () => {
@@ -137,11 +140,35 @@ export const dispatchUpdateLocations = ({dispatch}) => (newLocations, employee) 
             });
     }
 
- export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch) =>{
+export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch) =>{
     const path = `${ENDPOINT_URL}/${empId}/family`;
     setupRequest(path, etag, newFamilyMembers)
     .then(() => {
-        /** update currentEmployee store after update grade to get new etag */
+        /** update currentEmployee store after update family member to get new etag */
         setCurrEmployee(dispatch,empId);
     });
 }
+
+export const loadEmployees = (searchBy, params) => {
+    if (searchBy === 'name') {
+        //searchEmployeesByName(name, sortBy, pagingInfo)
+        return searchEmployeesByName(params, Sort_By,  Paging_Info)
+    } else {
+        console.log('test');
+        //return filterEmployees(this.filter.filters ? this.filter.filters : {}, this.sortBy, this.pagingInfo);
+    }
+}
+
+export const refreshEmployeeList = (searchBy, params) => (dispatch) => {
+    loadEmployees(searchBy, params)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            dispatch(action.fetchEmployees(json._embedded.employees));
+        })
+}
+
+

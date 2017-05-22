@@ -31,3 +31,25 @@ export function generateLocId(empId) {
 export function generateProjectId(empId) {
     return "p_" + empId + "_" + generateSubID();
 }
+
+export function createSortParam(sortOptions) {
+    if (sortOptions.length > 0) {
+        let sortParam = "&";
+        sortOptions.forEach((item) => {
+            sortParam += "sort="+item.sortBy+","+item.sortType+"&";
+        });
+
+        sortParam = sortParam.substr(0, sortParam.length-1);
+        // console.log("sortParam: ", sortParam);
+        return sortParam;
+    }
+    return "";
+}
+
+export function createPageParam(pagingInfo) {
+    return "?size="+pagingInfo.size+(pagingInfo.number ? "&page="+pagingInfo.number : "");
+}
+
+export function createParam(pagingInfo, sortOptions) {
+    return createPageParam(pagingInfo) + createSortParam(sortOptions);
+}

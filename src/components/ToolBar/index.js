@@ -9,6 +9,11 @@ import AVPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import { sortByOptions } from '../../utils/lib/constants';
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as RMSAction from '../../data/employees/actionCreators'
 
 import {
     white
@@ -30,11 +35,35 @@ class Toolbars extends Component {
 
         this.state = {
             filterOpen: false,
-            sortOpen: false
+            sortOpen: false,
+            textSearch: ""
         }
 
         this.filterForm = null;
         this.sortForm = null;
+    }
+
+    handleSortOpen(){
+        this.setState({sortOpen: true});
+    }
+
+    handleSortClose(){
+        this.setState({sortOpen: false});
+    }
+
+    handleFilterOpen() {
+        this.setState({filterOpen: true})
+    }
+
+    handleFilterClose() {
+        this.setState({filterOpen: false})
+    }
+
+    handleTextSearchChange = (event) => {
+        this.setState({textSearch: event.target.value});
+        if(event.keyCode === 13) {
+            this.props.actions.refreshEmployeeList('name', event.target.value);
+        }
     }
 
     render() {
@@ -44,6 +73,7 @@ class Toolbars extends Component {
         const filterActions = [
             <FlatButton
                 label="Cancel" 
+                onClick={()=> this.handleFilterClose()}
             />,
             <FlatButton
                 label="Filter"
@@ -54,6 +84,7 @@ class Toolbars extends Component {
         const sortActions = [
             <FlatButton
                 label="Cancel" 
+                onClick={()=> this.handleSortClose()}
             />,
             <FlatButton
                 label="Sort"
@@ -76,15 +107,18 @@ class Toolbars extends Component {
                                    underlineShow={false}
                                    hintStyle={searchTextStyles}
                                    inputStyle={searchTextStyles}
+                                   onChange={(event) => this.handleTextSearchChange(event)}
+                                   onKeyDown={(event) => this.handleTextSearchChange(event)}
                         />
                         <FontIcon className="fa fa-sort-amount-desc" 
                                     color={white}
                         />                    
                         <IconButton tooltip={this.state.filterByCriteria? "Filter On":"Filter Off"} 
+                            onClick={()=>this.handleFilterOpen()}
                             className="panel-list-btn">
                             <ContentFilterList color={white} />
                         </IconButton>
-                        <IconButton tooltip="Order" className="panel-list-btn" >
+                        <IconButton tooltip="Order" className="panel-list-btn" onClick={()=>{this.handleSortOpen()}} >
                             <AVPlaylistAddCheck color={white} />
                         </IconButton>
                         <Chip></Chip>
@@ -115,4 +149,8 @@ class Toolbars extends Component {
     }
 }
 
-export default Toolbars;
+const mapDispatchToProps = (dispatch) => (
+    {actions: bindActionCreators(RMSAction, dispatch)}
+)
+
+export default connect(null, mapDispatchToProps)(Toolbars);

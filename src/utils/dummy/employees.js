@@ -164,3 +164,24 @@ export const employees = [
       ]
     }
   ] ;
+
+
+  export const offices =[ {
+      addressId : "Bandung",
+      streetAddress : "Jl Surya Sumantri no 8D",
+      city : "Bandung",
+      province : "Jawa Barat",
+      postCode : "40164"
+    }, {
+      addressId : "Yogyakarta",
+      streetAddress : "Jln Sidobali No 2, Muja Muju",
+      city : "Umbulharjo",
+      province : "Yogyakarta",
+      postCode : "55165"
+    }, {
+      addressId : "Bali-Suwung",
+      streetAddress : "Jln Bypass Ngurah Rai gg. Mina Utama No. 1",
+      city : "Suwung",
+      province : "Bali",
+      postCode : "80223"
+    } ];

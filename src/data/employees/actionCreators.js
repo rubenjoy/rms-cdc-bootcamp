@@ -1,6 +1,6 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects,
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects, putLocations,
          searchEmployeesByName } 
     from '../../utils/lib/employeeApiHelpers';
 
@@ -110,9 +110,23 @@ export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{
 
 
 
-export const dispatchUpdateProjects = ({dispatch}) => (newProjects, histForm, employee) => {
-        //this.setLoading();
+export const dispatchUpdateProjects = ({dispatch}) => (newProjects, employee) => {
         putProjects(newProjects, employee.empId, employee.etag)
+            .then((response) => {
+                if (response.ok) {
+                 setCurrEmployee(dispatch, employee.empId);
+                } else {
+                  new Error("error");
+                }
+            })
+            .catch((error) => {
+                alert('Error occured');
+                console.log(error);
+            });
+    }
+
+export const dispatchUpdateLocations = ({dispatch}) => (newLocations, employee) => {
+        putLocations(newLocations, employee.empId, employee.etag)
             .then((response) => {
                 if (response.ok) {
                  setCurrEmployee(dispatch, employee.empId);

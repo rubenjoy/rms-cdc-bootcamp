@@ -42,7 +42,7 @@ class FormFamily extends Component {
         super(props);
         this.state = {
           editMode: false,
-          familyMembers: []
+          familyMembers: this.props.familyMembers
         }
     }
 
@@ -55,10 +55,12 @@ class FormFamily extends Component {
     }
 
     cancelEditFamilyMembers() {
-        this.setState({
-            familyMembers: this.props.familyMembers,
-            editMode: false
-        });
+        if (confirm("Are you sure to discard changes?")) {
+            this.setState({
+                familyMembers: this.props.familyMembers,
+                editMode: false
+            });
+        }
     }
 
     validateMandatoryField (newFamilyMembers){

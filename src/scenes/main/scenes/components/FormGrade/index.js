@@ -39,11 +39,11 @@ class FormGrade extends Component {
         super(props);
         this.state = {
           editMode: false,
-          grades: []
+          grades: this.props.grades
         }
     }
 
-    componentWillReceiveProps = (nextProps) => {
+    componentWillReceiveProps (nextProps) {
       this.setState({grades: nextProps.grades})
     }
 
@@ -52,10 +52,12 @@ class FormGrade extends Component {
     }
 
     cancelEditGrades() {
-        this.setState({
-            grades: this.props.grades,
-            editMode: false
-        });
+        if (confirm("Are you sure to discard changes?")) {
+            this.setState({
+                grades: this.props.grades,
+                editMode: false
+            });
+        }
     }
 
     validateMandatoryField (newGrades){

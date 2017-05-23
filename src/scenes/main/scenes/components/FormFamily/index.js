@@ -69,8 +69,8 @@ class FormFamily extends Component {
         if (familyMember.name === "" || familyMember.gender === "" || familyMember.dob === null || familyMember.relation===""){
           isValid = false
         }
+        return isValid;
       })
-      return isValid;
     } 
 
     saveEditFamilyMembers () {

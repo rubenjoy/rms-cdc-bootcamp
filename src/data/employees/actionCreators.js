@@ -1,11 +1,11 @@
 import * as action from './actions';
 import 'whatwg-fetch';
 import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects, putLocations,
-         searchEmployeesByName } 
+         searchEmployeesByName, filterEmployees } 
     from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
-const Paging_Info = 10;
+const Paging_Info = {size: 10};
 const Sort_By = [ { sortBy: "dateAdded", sortType: "desc" } ];
 
 export const dispatchFetchEmployees = ({dispatch}) => {
@@ -151,11 +151,9 @@ export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch)
 
 export const loadEmployees = (searchBy, params) => {
     if (searchBy === 'name') {
-        //searchEmployeesByName(name, sortBy, pagingInfo)
         return searchEmployeesByName(params, Sort_By,  Paging_Info)
     } else {
-        console.log('test');
-        //return filterEmployees(this.filter.filters ? this.filter.filters : {}, this.sortBy, this.pagingInfo);
+        return filterEmployees(params, Sort_By, Paging_Info)
     }
 }
 
@@ -167,8 +165,38 @@ export const refreshEmployeeList = (searchBy, params) => (dispatch) => {
             }
         })
         .then((json) => {
-            dispatch(action.fetchEmployees(json._embedded.employees));
+            dispatch(action.fetchEmployees(json._embedded ? json._embedded.employees : []));
         })
+}
+
+export const getOffices = ({dispatch}) => {
+    const URL = 'https://rmsbackendspringstaging.herokuapp.com/offices';
+    return () => {
+        fetch(URL)
+            .then(response => response.json())
+            .then(json => {
+                dispatch(action.getOffices(json._embedded.offices));
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
+}
+
+export const getJobFamilies = ({dispatch}) => {
+    const URL = 'https://rmsbackendspringstaging.herokuapp.com/jobFamilies'
+    return () => {
+        fetch(URL)
+            .then(response => response.json())
+            .then(json => {
+                dispatch(action.getJobFamily(json._embedded.jobFamilies));
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
 }
 
 

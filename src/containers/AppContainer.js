@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { browserHistory, Router } from 'react-router'
 import { Provider } from 'react-redux'
-import { dispatchFetchEmployees } from '../data/employees/actionCreators'
+import { dispatchFetchEmployees, getOffices, getJobFamilies } from '../data/employees/actionCreators'
 
 class AppContainer extends Component {
   static propTypes = {
@@ -14,6 +14,8 @@ class AppContainer extends Component {
     if (this.props.store.getState().employees.employees.length === 0) {
       dispatchFetchEmployees(this.props.store)();
     }    
+    getOffices(this.props.store)();
+    getJobFamilies(this.props.store)();
   }
 
   shouldComponentUpdate () {

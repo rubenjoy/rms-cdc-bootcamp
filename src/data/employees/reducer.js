@@ -4,7 +4,9 @@ import * as actionTypes from './actionTypes';
 const initialState = {
     employees: [],
     currentEmployee: {},
-    newEmployee: {}
+    newEmployee: {},
+    jobFamilies: [],
+    offices: [] 
 };
 
 // Process the data based on action taken (immutable)
@@ -67,6 +69,22 @@ export const reducer = (state = initialState, action) => {
                 ...initialState,
                 newEmployee: action.payload
             };
+        }
+
+        // offices
+        case actionTypes.GET_OFFICES: {
+            return {
+                ...state,
+                offices: action.payload
+            }
+        }
+
+        // job families
+        case actionTypes.GET_JOB_FAMILY: {
+            return {
+                ...state,
+                jobFamilies: action.payload
+            }
         }
         
         // If no action match

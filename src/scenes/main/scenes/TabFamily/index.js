@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import FormFamily from '../components/FormFamily';
+import * as _ from 'lodash';
+import NoData from '../components/NoData';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -11,26 +13,18 @@ class TabFamily extends Component {
     
     const {familyMembers, empId, etag} = this.props.currentEmployee;
 
-    const defaultFamilyMembers = (familyMembers) => ({
-      name: familyMembers.name,
-      gander: familyMembers.gender,
-      dob: familyMembers.dob,
-      relation: familyMembers.relation,
-      active: familyMembers.active
-    });
-
-
-
     const onSaveFamilyMembers = (newFamilyMembers) => {
         this.props.actions.updateFamilyMembers(newFamilyMembers, empId, etag);
     }
 
     return(
       <div>
+        {!_.isEmpty(this.props.currentEmployee) ?
         <FormFamily familyMembers={familyMembers}
                     empId={empId ? empId : 0}
                     onSaveFamilyMembers={onSaveFamilyMembers}
-        /> 
+        /> : <NoData text={"No Family Members"}/>
+        }
       </div>
     );
   }

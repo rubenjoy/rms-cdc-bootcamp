@@ -42,3 +42,17 @@ export const setCurrEmployee = (employee) => {
         payload: employee
     };
 };
+
+export const getOffices = (offices) => {
+    return {
+        type: actionTypes.GET_OFFICES,
+        payload: offices
+    }
+}
+
+export const getJobFamily = (jobFamily) => {
+    return {
+        type: actionTypes.GET_JOB_FAMILY,
+        payload: jobFamily
+    }
+}

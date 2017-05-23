@@ -66,8 +66,8 @@ class FormGrade extends Component {
         if (grade.ds === 0 || grade.startDate === null){
           isValid = false
         }
+        return isValid;
       })
-      return isValid;
     } 
 
     saveEditGrades () {

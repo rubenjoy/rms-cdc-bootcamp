@@ -36,7 +36,7 @@ class TabLocation extends Component {
                               onSave={this.onSaveLocation}
                               officeAddresses={this.state.offices ? this.state.offices : []}
                               viewingEmpId={viewingEmpId ? viewingEmpId : 0}
-                              setErrorMessage = {setErrorMessage}
+                              setErrorMessage={setErrorMessage}
                 /> : <NoData text={'No Locations'}/>
             }
         </div>

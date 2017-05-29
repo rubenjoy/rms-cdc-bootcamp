@@ -71,6 +71,7 @@ class FormFamily extends Component {
         }
         return isValid;
       })
+      return isValid;
     } 
 
     saveEditFamilyMembers () {

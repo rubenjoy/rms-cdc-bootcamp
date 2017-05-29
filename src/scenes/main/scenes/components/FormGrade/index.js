@@ -68,6 +68,7 @@ class FormGrade extends Component {
         }
         return isValid;
       })
+      return isValid;
     } 
 
     saveEditGrades () {

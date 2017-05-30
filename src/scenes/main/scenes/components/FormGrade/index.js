@@ -39,12 +39,22 @@ class FormGrade extends Component {
         super(props);
         this.state = {
           editMode: false,
-          grades: this.props.grades
+          grades: this.props.grades,
+          minDS: "",
+          maxDS: ""
         }
     }
 
     componentWillReceiveProps (nextProps) {
-      this.setState({grades: nextProps.grades})
+        // this.setState({grades: nextProps.grades});
+        const { grades, jobFamily, jobFamilies } = nextProps;
+        const jf = jobFamilies.filter((j) => j.jfCode === jobFamily)[0];
+
+        this.setState({
+            grades: grades,
+            minDS: jf ? jf.minDs : "",
+            maxDS: jf ? jf.maxDs : ""
+        });
     }
 
     setToEditMode() {
@@ -68,6 +78,7 @@ class FormGrade extends Component {
         }
         return isValid;
       })
+      return isValid;
     } 
 
     saveEditGrades () {
@@ -78,11 +89,16 @@ class FormGrade extends Component {
     }
 
     onDSChange = (ds,gradeId) => {
+        const jf = this.props.jobFamilies.filter((j) => j.jfCode === this.props.jobFamily)[0];
+        const currentGrade = jf.jfLevels.filter((g) => ds >= g.minDs && ds <= g.maxDs)[0];
+        const selectedGrade = currentGrade ? currentGrade.grade : ""
+
       const newGrades = this.state.grades.map((grade) => {
         if (grade.gradeId === gradeId) {
           return {
             ...grade,
-            ds: ds
+            ds: ds,
+            grade: selectedGrade
           };
         } else {
           return grade;
@@ -127,8 +143,7 @@ class FormGrade extends Component {
 
     render() {
       const {editMode} = this.state;
-      const grades = this.state.grades ? this.state.grades : [];
-      
+      const grades = this.state.grades ? this.state.grades : [];     
         return (
             <div>
                 <Table>

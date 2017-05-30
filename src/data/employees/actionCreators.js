@@ -6,7 +6,7 @@ import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, 
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
 const Paging_Info = {size: 10};
-const Sort_By = [ { sortBy: "dateAdded", sortType: "desc" } ];
+const Sort_By = [ { sortBy: "firstName", sortType: "asc" } ];
 
 export const dispatchFetchEmployees = ({dispatch}) => {
     return () => {
@@ -149,16 +149,17 @@ export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch)
     });
 }
 
-export const loadEmployees = (searchBy, params) => {
+export const loadEmployees = (searchBy, params, sortBy) => {
     if (searchBy === 'name') {
-        return searchEmployeesByName(params, Sort_By,  Paging_Info)
+        return searchEmployeesByName(params, sortBy,  Paging_Info)
     } else {
-        return filterEmployees(params, Sort_By, Paging_Info)
+        return filterEmployees(params, sortBy, Paging_Info)
     }
 }
 
-export const refreshEmployeeList = (searchBy, params) => (dispatch) => {
-    loadEmployees(searchBy, params)
+export const refreshEmployeeList = (searchBy, params, sortBy) => (dispatch) => {
+    const sortedBy = sortBy ? sortBy : Sort_By
+    loadEmployees(searchBy, params, sortedBy)
         .then((response) => {
             if (response.ok) {
                 return response.json();

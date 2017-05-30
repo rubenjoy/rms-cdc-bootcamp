@@ -8,7 +8,9 @@ import {bindActionCreators} from 'redux';
 import * as RMSActions from '../../../../data/employees/actionCreators';
 
 class TabGrade extends Component {
-
+    constructor (props) {
+        super(props);
+    }
   render() {
     
     const {grades, empId, jobFamily, etag} = this.props.currentEmployee;
@@ -24,6 +26,7 @@ class TabGrade extends Component {
                     jobFamily={jobFamily}
                     empId={empId ? empId : 0}
                     onSaveGrades={onSaveGrades}
+                    jobFamilies={this.props.jobFamilies}
                 /> 
         : <NoData text={"No Grades"}/>
         }
@@ -34,7 +37,8 @@ class TabGrade extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        currentEmployee: state.employees.currentEmployee
+        currentEmployee: state.employees.currentEmployee,
+        jobFamilies: state.employees.jobFamilies
     };
 }
 

@@ -1,5 +1,6 @@
 // We only need to import the modules necessary for initial render
 import AppLayout from './layouts/AppLayout'
+import Login from './scenes/login/scenes/Login'
 import TabProfile from './scenes/main/scenes/TabProfile'
 import TabHistory from './scenes/main/scenes/TabHistory'
 import TabAddress from './scenes/main/scenes/TabAddress'
@@ -10,11 +11,21 @@ import TabLocation from './scenes/main/scenes/TabLocation'
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
+
+
+const requireAuth = (store, nextState, replace) => {
+  debugger
+  const authenticated = store.getState().account.accessToken;
+  const pathname = nextState.location.pathname;
+  if (!authenticated && pathname != '/login') replace('/login');
+}
+
 export const createRoutes = (store) => ({
   path        : '/',
   component   : AppLayout,
   indexRoute  : {
-      component: TabProfile
+      component: TabProfile,
+      onEnter: requireAuth.bind(this, store)
   },
   childRoutes : [
     {
@@ -40,7 +51,17 @@ export const createRoutes = (store) => ({
     {
       path: '/locations',
       component: TabLocation
+    },
+    {
+        path: '/login',
+        component: Login
     }
+  ],
+  routes: [
+  {
+      path: '/login',
+      component: Login
+  }
   ]
 })
 

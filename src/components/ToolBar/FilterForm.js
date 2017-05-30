@@ -41,6 +41,11 @@ class FilterForm extends Component {
             filterOptions: defaultFilter,
             filters: {}
         });
+
+        this.props.handleChangeFilter({
+            filterOptions: defaultFilter,
+            filters: {}
+        });
     }
 
     handleChangeChecked = (event, name) => {
@@ -48,6 +53,7 @@ class FilterForm extends Component {
         let newFilters = this.state.filters;
         if (!event.target.checked) {
             delete newFilters[name];
+            this.props.handleChangeFilter(newFilters);
         }
 
         this.setState({
@@ -60,6 +66,15 @@ class FilterForm extends Component {
             },
             filters: newFilters
         });
+
+        this.props.handleChangeFilterOptions({
+            ...this.state.filterOptions,
+            [name]: {
+                    ...this.state.filterOptions[name],
+                    checked: event.target.checked
+            }
+        });
+
     }
 
     handleChangeCheckedForJobFamily = (event, name) => {
@@ -81,6 +96,17 @@ class FilterForm extends Component {
                 }
             },
             filters: newFilters
+        });
+        this.props.handleChangeFilterOptions({
+            ...this.state.filterOptions,
+            [name]: {
+                ...this.state.filterOptions[name],
+                checked: event.target.checked
+            },
+            jobFamily: {
+                ...this.state.filterOptions.jobFamily,
+                checked: true
+            }
         });
     }
 
@@ -113,7 +139,21 @@ class FilterForm extends Component {
                 }
             }
         });
-
+        this.props.handleChangeFilterOptions({
+            ...this.state.filterOptions,
+            grade: {
+                ...this.state.filterOptions.grade,
+                options: gradeOptions
+            },
+            division: {
+                ...this.state.filterOptions.division,
+                options: divOptions
+            },
+            jobFamily: {
+                ...this.state.filterOptions.jobFamily,
+                value
+            }
+        });
     }
 
     handleChangeFilter = (event, index, value, name) => {

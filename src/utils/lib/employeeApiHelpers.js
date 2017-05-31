@@ -1,16 +1,44 @@
-import { createParam } from './employeeHelpers';
+import { createParam, urlencodeFormData } from './employeeHelpers';
+import axios from 'axios';
+import URI from "urijs";
 
 export const empUrl = process.env.REACT_APP_API_URL ?
-    process.env.REACT_APP_API_URL : 'https://rmsbackendspringstaging.herokuapp.com/employees'; //TODO: get from config samting
+    process.env.REACT_APP_API_URL : 'http://localhost:9090/employees'; //TODO: get from config samting
+
+export const localUrl = "http://localhost:9090/oauth/token"
 
 export const addEmployee = (newEmployee) => {
     return fetch(empUrl, {
         method: "POST",
         headers: {
             "Accept": "application/json",
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": defaultAuthorization()
         },
         body: JSON.stringify(newEmployee)
+    });
+}
+
+export const requestToken = (credentials) => {
+    var authOptions = {
+        method: 'POST',
+        url: 'http://localhost:9090/oauth/token',
+        headers: {
+            'Authorization': 'Basic '+btoa(credentials.client_id+':'+credentials.client_secret),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    var formData = new FormData();
+
+    formData.append("grant_type", "password");
+    formData.append("password", credentials.password);
+    formData.append("username", credentials.username);
+
+
+    return fetch('http://localhost:9090/oauth/token', {
+        method: "POST",
+        headers: authOptions.headers,
+        body: urlencodeFormData(formData)
     });
 }
 
@@ -40,7 +68,10 @@ export const filterEmployees = (filter, sortBy, pagingInfo) => {
 
 export const getEmployee = (empId) => {
 
-    return fetch(`${empUrl}/${empId}`);
+    return fetch(`${empUrl}/${empId}`, {
+        mode: "GET",
+        headers: defaultGetHeader()
+    });
 }
 
 export const searchEmployeesByName = (name, sortBy, pagingInfo) => {
@@ -101,4 +132,32 @@ export const setupRequest = (path, etag, body) => {
         },
         body: JSON.stringify(body)
     });
+}
+
+
+
+export const defaultGetHeader = () => {
+    const authorization = sessionStorage 
+        && sessionStorage.accessToken ? JSON.parse(sessionStorage.accessToken) : null;
+
+        if (authorization) {
+            return {
+                Authorization: `Bearer ${authorization.access_token}`
+            }
+        } else {
+            return {}
+        }
+}
+
+
+
+export const defaultAuthorization = () => {
+    const authorization = sessionStorage 
+        && sessionStorage.accessToken ? JSON.parse(sessionStorage.accessToken) : null;
+
+        if (authorization) {
+            return `Bearer ${authorization.access_token}`
+        } else {
+            return null
+        }
 }

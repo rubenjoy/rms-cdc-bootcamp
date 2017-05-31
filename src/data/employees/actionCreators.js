@@ -1,7 +1,7 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { patchEmployee, getEmployee, addEmployee, deleteEmployee, setupRequest, putProjects, putLocations,
-         searchEmployeesByName, filterEmployees } 
+import { patchEmployee, getEmployee, addEmployee, deleteEmployee, 
+    setupRequest, putProjects, putLocations, defaultGetHeader, searchEmployeesByName, filterEmployees } 
     from '../../utils/lib/employeeApiHelpers';
 
 const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
@@ -10,21 +10,28 @@ const Sort_By = [ { sortBy: "firstName", sortType: "asc" } ];
 
 export const dispatchFetchEmployees = ({dispatch}) => {
     return () => {
-        fetch(ENDPOINT_URL)
-            .then(response => response.json())
-            .then(json => {
-                dispatch(action.fetchEmployees(json._embedded.employees));
-            })
-            .catch(error => {
-                alert('Error occured');
-                console.log(error)
-            });
+
+        fetch(ENDPOINT_URL, {
+            method: "GET",
+            headers: defaultGetHeader()
+        })
+        .then(response => {
+            if (response.ok) return response.json()
+            throw new Error('error')
+        })
+        .then(json => {
+            dispatch(action.fetchEmployees(json._embedded.employees));
+        })
+        .catch(error => {
+            alert('Error occured');
+            console.log(error)
+        });
     }
 }; 
 
-const setCurrEmployee = (dispatch, empId) => {
+const setCurrEmployee = (dispatch, empId, callback) => {
     let fetchedEmployee = {}
-    getEmployee(empId)
+    getEmployee(empId, callback)
         .then ((response) => {
             if(response.ok){
                 fetchedEmployee.etag = response.headers.get("Etag");
@@ -37,6 +44,9 @@ const setCurrEmployee = (dispatch, empId) => {
                 ...json
             }
             dispatch(action.setCurrEmployee(fetchedEmployee));
+        })
+        .then(() => {
+            if (typeof callback === "function") callback()
         });
 }
 
@@ -95,8 +105,8 @@ export const dispatchUpdateEmployee  = ({dispatch}) => {
     }
 }
 
-export const setCurrentEmployee = ({dispatch}) => (empId) => {
-    setCurrEmployee(dispatch, empId);
+export const setCurrentEmployee = ({dispatch}) => (empId, callback) => {
+    setCurrEmployee(dispatch, empId, callback);
 }
 
 export const updateGrades = (newGrades, empId, etag) => (dispatch) =>{

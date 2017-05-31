@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import AppBar from 'material-ui/AppBar';
 import { Grid, Row, Col } from 'react-bootstrap';
 
+import {connect} from 'react-redux';
+import { browserHistory, Router } from 'react-router'
 import EmployeeListBar from '../components/EmployeeListBar';
 import ToolBar from '../components/ToolBar';
 import TabBar from '../components/TabBar';
@@ -31,4 +33,8 @@ class App extends Component {
 
 }
 
-export default App;
+export default connect((state) => {
+  return {
+    accessToken: state.account.accessToken,
+  }
+})(App);

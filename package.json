@@ -14,9 +14,12 @@
     "react-tap-event-plugin": "^2.0.1"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "font-awesome": "^4.7.0",
     "material-ui": "^0.16.0",
     "moment-es6": "1.0.0",
+    "prop-types": "^15.5.7",
+    "react": "15.4.2",
     "react-addons-update": "15.4.2",
     "react-bootstrap": "^0.30.7",
     "react": "15.4.2",
@@ -26,8 +29,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "whatwg-fetch": "^2.0.3",
-    "prop-types": "^15.5.7"
+    "urijs": "^1.18.10",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
@@ -37,5 +40,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:9090"
 }

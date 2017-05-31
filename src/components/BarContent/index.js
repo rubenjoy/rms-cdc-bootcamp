@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import Person from 'material-ui/svg-icons/action/account-circle';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Power from 'material-ui/svg-icons/action/power-settings-new';
+
+import {connect} from 'react-redux';
+import { dispatchLogout } 
+    from '../../data/account/actionCreators'
+import { Router, browserHistory } from 'react-router'
 import './index.css';
 
 import {
@@ -21,6 +26,13 @@ class BarContent extends Component {
                 grade: "Grade"
             }
         }
+        this.logout = this.logout.bind(this);
+    }
+
+    logout () {
+        dispatchLogout(this.props)(() => {
+          browserHistory.push('/')
+        });
     }
     
     render () {
@@ -38,7 +50,7 @@ class BarContent extends Component {
                         <Settings color={white} 
                             className="icon-style"
                         />
-                        <Power color={white} />
+                        <Power color={white} onClick={this.logout}/>
                     </div>
                 </div>
             </div>
@@ -47,4 +59,4 @@ class BarContent extends Component {
     }
 };
 
-export default BarContent
+export default connect()(BarContent)

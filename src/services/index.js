@@ -1,0 +1,1 @@
+client1curl -X POST --user 'client1:secret' -d 'grant_type=password&username=john.doe&password=password' http://localhost:9090/employees/oauth/token

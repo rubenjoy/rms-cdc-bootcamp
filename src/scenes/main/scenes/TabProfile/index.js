@@ -19,13 +19,10 @@ class TabProfile extends Component {
         this.state = {
             employee : props.currentEmployee ? props.currentEmployee : {},
             employeeStore: dummy.employees,
-            jobFamilies: dummy.jobFamilies,
-            dummyViewingEmpId: 0,
-            dummyCount: 1
+            currentGrade: ""
         }
         this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
         this.getInitialEmployee = this.getInitialEmployee.bind(this);
-       // this.getInitialEmployee(props);
     }
 
     onCancel () {
@@ -56,10 +53,11 @@ class TabProfile extends Component {
             <div className="tab-profile">
                 { this.state.employee && this.state.employee.email ?
                         <FormProfile initialValues={this.state.employee}
-                                 jobFamilies={this.state.jobFamilies}
+                                 jobFamilies={this.props.jobFamilies}
                                  updateState={this.updateEmployeeForm}
                                  onSave={this.onSave}
                                  onCancel={this.onCancel}
+                                 currentGrade={this.state.employee.grades.map((grade)=> grade.endDate == null ? grade.grade : null)}
                         />
                     : <NoData/> }
             </div>
@@ -71,6 +69,7 @@ class TabProfile extends Component {
 export default connect((state) => {
   return {
     employees: state.employees.employees,
-    currentEmployee: state.employees.currentEmployee
+    currentEmployee: state.employees.currentEmployee,
+    jobFamilies: state.employees.jobFamilies
   }
 })(muiThemeable()(TabProfile))

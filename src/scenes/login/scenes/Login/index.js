@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import {connect} from 'react-redux';
 import { dispatchLogin } 
     from '../../../../data/account/actionCreators'
+import { dispatchFetchEmployees } 
+    from '../../../../data/employees/actionCreators'
+import { Router, browserHistory } from 'react-router'
+import './index.css' ;
 
 class Login extends Component {
 
@@ -21,8 +25,10 @@ class Login extends Component {
     }
 
     login () {
-        debugger
-        dispatchLogin(this.props)(this.state.account);
+        dispatchLogin(this.props)(this.state.account, () => {
+          browserHistory.push('/profile')
+          dispatchFetchEmployees(this.props)();
+        });
     }
 
     handleChangeText = (event) => this.setState({
@@ -33,32 +39,38 @@ class Login extends Component {
 
 
     render() {
-
         return (
-            <div>
-
-                <TextField
-                  name="username"
-                  value = {this.state.account.username}
-                  hintText="Hint Text"
-                  onChange={this.handleChangeText}
-                  floatingLabelText="Fixed Floating Label Text"
-                  floatingLabelFixed={true}
-                /><br />
-                <TextField
-                  name="password"
-                  value = {this.state.account.password}
-                  onChange={this.handleChangeText}
-                  hintText="Password Field"
-                  floatingLabelText="Password"
-                  type="password"
-                /><br />
-                <FlatButton label="Login" 
-                    onClick={this.login}/>
+            <div className="login">
+              <div className="login-page">
+                <div className="form">
+                  <form class="register-form">
+                  <TextField
+                    name="username"
+                    placeholder="username"
+                    value = {this.state.account.username}
+                    onChange={this.handleChangeText}
+                    floatingLabelFixed={true}
+                  />
+                  <TextField
+                    name="password"
+                    placeholder="password"
+                    value = {this.state.account.password}
+                    onChange={this.handleChangeText}
+                    type="password"
+                  /><br />
+                  <RaisedButton label="Login" 
+                      onClick={this.login}/>
+                      </form>
+                </div>
+              </div>
                 
             </div>
         );
     }
 }
 
-export default connect()(Login)
+export default connect((state) => {
+  return {
+    accessToken: state.account.accessToken,
+  }
+})(Login)

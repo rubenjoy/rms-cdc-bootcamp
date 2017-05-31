@@ -6,3 +6,9 @@ export const login = (account) => {
         payload: account
     };
 };
+
+export const logout = () => {
+    return {
+        type: actionTypes.LOGOUT
+    };
+};

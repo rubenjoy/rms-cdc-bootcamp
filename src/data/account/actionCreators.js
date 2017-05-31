@@ -3,33 +3,36 @@ import 'whatwg-fetch';
 import { requestToken } 
     from '../../utils/lib/employeeApiHelpers';
 
-const ENDPOINT_URL = 'https://localhost:9091/oauth/token';
-
-
-export const postData = {
-    data: {
-        grant_type:"password", 
-        username: "doncorleone", 
-        password: "password",
-        client_id: "client4"
-    },
-    encoded: "secret",
-};
-
-
 
 export const dispatchLogin = ({dispatch}) => {
-    return (credential) => {
-        debugger
-        requestToken(postData)
-            .then((response) => {debugger})
+    return (credential, callback) => {
+        credential.client_id = "client4"
+        credential.client_secret = "secret"
+        requestToken(credential)
+            .then(response => {
+                if (response.ok) return response.json(); 
+                throw new Error("error");
+            })
             .then(json => {
-                debugger
+                dispatch(action.login(json));
+                sessionStorage.setItem('accessToken', JSON.stringify(json));
+            })
+            .then(() => {
+                if (typeof callback === "function") callback()
             })
             .catch(error => {
-                debugger
                 alert('Error occured');
                 console.log(error)
             });
     }
+}; 
+
+
+export const dispatchLogout = ({dispatch}) => {
+    return (callback) => {
+        dispatch(action.logout());
+        sessionStorage.removeItem('accessToken');
+        if (typeof callback === "function") callback()
+
+    } 
 }; 

@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import { grey400 } from 'material-ui/styles/colors'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
+import { browserHistory, Router } from 'react-router'
 
 import {connect} from 'react-redux';
 import { dispatchDeleteEmployee, setCurrentEmployee } 
@@ -29,7 +30,9 @@ class EmployeeItem extends Component {
     }
 
     onSelectEmployee (employee) {
-      setCurrentEmployee(this.props)(employee);
+      setCurrentEmployee(this.props)(employee, () => {
+            browserHistory.push('/profile');
+      });
     }
 
     onDeleteEmployee(id, fullName) {

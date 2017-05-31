@@ -1,10 +1,12 @@
 import * as action from './actions';
 import 'whatwg-fetch';
 import { patchEmployee, getEmployee, addEmployee, deleteEmployee, 
-    setupRequest, putProjects, putLocations, defaultGetHeader } 
+    setupRequest, putProjects, putLocations, defaultGetHeader, searchEmployeesByName, filterEmployees } 
     from '../../utils/lib/employeeApiHelpers';
 
-const ENDPOINT_URL = 'http://localhost:9090/employees';
+const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
+const Paging_Info = {size: 10};
+const Sort_By = [ { sortBy: "firstName", sortType: "asc" } ];
 
 export const dispatchFetchEmployees = ({dispatch}) => {
     return () => {
@@ -148,11 +150,64 @@ export const dispatchUpdateLocations = ({dispatch}) => (newLocations, employee) 
             });
     }
 
- export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch) =>{
+export const updateFamilyMembers = (newFamilyMembers, empId, etag) => (dispatch) =>{
     const path = `${ENDPOINT_URL}/${empId}/family`;
     setupRequest(path, etag, newFamilyMembers)
     .then(() => {
-        /** update currentEmployee store after update grade to get new etag */
+        /** update currentEmployee store after update family member to get new etag */
         setCurrEmployee(dispatch,empId);
     });
 }
+
+export const loadEmployees = (searchBy, params, sortBy) => {
+    if (searchBy === 'name') {
+        return searchEmployeesByName(params, sortBy,  Paging_Info)
+    } else {
+        return filterEmployees(params, sortBy, Paging_Info)
+    }
+}
+
+export const refreshEmployeeList = (searchBy, params, sortBy) => (dispatch) => {
+    const sortedBy = sortBy ? sortBy : Sort_By
+    loadEmployees(searchBy, params, sortedBy)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            dispatch(action.fetchEmployees(json._embedded ? json._embedded.employees : []));
+        })
+}
+
+export const getOffices = ({dispatch}) => {
+    const URL = 'https://rmsbackendspringstaging.herokuapp.com/offices';
+    return () => {
+        fetch(URL)
+            .then(response => response.json())
+            .then(json => {
+                dispatch(action.getOffices(json._embedded.offices));
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
+}
+
+export const getJobFamilies = ({dispatch}) => {
+    const URL = 'https://rmsbackendspringstaging.herokuapp.com/jobFamilies'
+    return () => {
+        fetch(URL)
+            .then(response => response.json())
+            .then(json => {
+                dispatch(action.getJobFamily(json._embedded.jobFamilies));
+            })
+            .catch(error => {
+                alert('Error occured');
+                console.log(error)
+            });
+    }
+}
+
+

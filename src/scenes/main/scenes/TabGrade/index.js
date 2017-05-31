@@ -1,39 +1,19 @@
 import React, {Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import FormGrade from '../components/FormGrade';
-
-import * as dummyEmployees 
-    from '../../../../utils/dummy/employees'
-import { genders, employeeStatusMap, maritalStatusMap } 
-    from '../../../../utils/lib/employeeHelpers'
+import * as _ from 'lodash';
+import NoData from '../components/NoData';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as RMSActions from '../../../../data/employees/actionCreators';
- 
-const buttonStyle = {
-    float: "right",
-    marginRight: 10,
-    marginTop: 5
-}
 
 class TabGrade extends Component {
-  constructor() {
-    super();
-  }
-
+    constructor (props) {
+        super(props);
+    }
   render() {
     
     const {grades, empId, jobFamily, etag} = this.props.currentEmployee;
-
-    const defaultGrade = (grades) => ({
-      ds: grades.ds,
-      grade: grades.grade,
-      startDate: grades.startDate,
-      endDate: grades.endDate
-    });
-
-
 
     const onSaveGrades = (newGrades) => {
         this.props.actions.updateGrades(newGrades, empId, etag);
@@ -41,11 +21,15 @@ class TabGrade extends Component {
 
     return(
       <div>
-        <FormGrade  grades={grades}
+        {!_.isEmpty(this.props.currentEmployee) ? 
+                <FormGrade  grades={grades}
                     jobFamily={jobFamily}
                     empId={empId ? empId : 0}
                     onSaveGrades={onSaveGrades}
-        /> 
+                    jobFamilies={this.props.jobFamilies}
+                /> 
+        : <NoData text={"No Grades"}/>
+        }
       </div>
     );
   }
@@ -53,7 +37,8 @@ class TabGrade extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        currentEmployee: state.employees.currentEmployee
+        currentEmployee: state.employees.currentEmployee,
+        jobFamilies: state.employees.jobFamilies
     };
 }
 

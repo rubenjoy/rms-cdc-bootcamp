@@ -6,3 +6,5 @@ export const EDIT_EMPLOYEE = 'EDIT_EMPLOYEE';
 export const GET_EMPLOYEE = 'GET_EMPLOYEE';
 export const SET_CURR_EMPLOYEE = 'SET_CURR_EMPLOYEE';
 export const SET_NEW_EMPLOYEE = 'SET_NEW_EMPLOYEE';
+export const GET_OFFICES = 'GET_OFFICES';
+export const GET_JOB_FAMILY = 'GET_JOB_FAMILY';

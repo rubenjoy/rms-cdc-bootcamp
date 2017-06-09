@@ -4,7 +4,7 @@ import { patchEmployee, getEmployee, addEmployee, deleteEmployee,
     setupRequest, putProjects, putLocations, defaultGetHeader, searchEmployeesByName, filterEmployees } 
     from '../../utils/lib/employeeApiHelpers';
 
-const ENDPOINT_URL = 'https://rmsbackendspringstaging.herokuapp.com/employees';
+const ENDPOINT_URL = 'http://localhost:9090/employees';
 const Paging_Info = {size: 10};
 const Sort_By = [ { sortBy: "firstName", sortType: "asc" } ];
 

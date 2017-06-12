@@ -1,7 +1,8 @@
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    accessToken: sessionStorage.getItem('accessToken') ? sessionStorage.getItem('accessToken') : null
+    accessToken: sessionStorage.getItem('accessToken') ? JSON.parse(sessionStorage.getItem('accessToken')) : null,
+    roles: sessionStorage.getItem('roles') ? JSON.parse(sessionStorage.getItem('roles')) : null
 };
 
 // Process the data based on action taken (immutable)
@@ -13,9 +14,15 @@ export const reducer = (state = initialState, action) => {
                 accessToken: action.payload
             };
         }
-        case actionTypes.LOGOUT:{
+        case actionTypes.GET_ROLES:{
             return {
                 ...state,
+                roles: action.payload
+            };
+        }  case actionTypes.LOGOUT:{
+            return {
+                ...state,
+                roles: null,
                 accessToken: null
             };
         }

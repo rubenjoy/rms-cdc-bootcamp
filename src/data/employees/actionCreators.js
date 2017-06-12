@@ -30,10 +30,12 @@ export const dispatchFetchEmployees = ({dispatch}) => {
 }; 
 
 const setCurrEmployee = (dispatch, empId, callback) => {
+    debugger
     let fetchedEmployee = {}
     getEmployee(empId, callback)
         .then ((response) => {
             if(response.ok){
+                debugger
                 fetchedEmployee.etag = response.headers.get("Etag");
                 return response.json();
             }

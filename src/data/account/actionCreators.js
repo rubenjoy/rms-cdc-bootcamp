@@ -1,6 +1,6 @@
 import * as action from './actions';
 import 'whatwg-fetch';
-import { requestToken } 
+import { requestToken, getRoles } 
     from '../../utils/lib/employeeApiHelpers';
 
 
@@ -18,6 +18,14 @@ export const dispatchLogin = ({dispatch}) => {
                 sessionStorage.setItem('accessToken', JSON.stringify(json));
             })
             .then(() => {
+                getRoles().then(response => {
+                    if (response.ok) return response.json(); 
+                    throw new Error("error");
+                }).then(json => {
+                    dispatch(action.getRoles(json));
+                    sessionStorage.setItem('roles', JSON.stringify(json));
+                })
+
                 if (typeof callback === "function") callback()
             })
             .catch(error => {
@@ -32,6 +40,7 @@ export const dispatchLogout = ({dispatch}) => {
     return (callback) => {
         dispatch(action.logout());
         sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('roles');
         if (typeof callback === "function") callback()
 
     } 

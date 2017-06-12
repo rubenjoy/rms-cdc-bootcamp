@@ -42,6 +42,14 @@ export const requestToken = (credentials) => {
     });
 }
 
+export const getRoles = () => {
+
+    return fetch("/roles", {
+        mode: "GET",
+        headers: defaultGetHeader()
+    });
+}
+
 export const patchEmployee = (patchedEmployee, empId, etag) => {
 
     return fetch(`${empUrl}/${empId}`, {
@@ -49,7 +57,8 @@ export const patchEmployee = (patchedEmployee, empId, etag) => {
         headers: {
             "Accept": "application/json",
             "Content-type": "application/json",
-            'If-Match': etag
+            'If-Match': etag,
+            "Authorization": defaultAuthorization()
         },
         body: JSON.stringify(patchedEmployee)
     });
@@ -60,7 +69,8 @@ export const filterEmployees = (filter, sortBy, pagingInfo) => {
         method: "POST",
         headers: {
             "Accept": "application/json",
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": defaultAuthorization()
         },
         body: JSON.stringify(filter)
     });
@@ -84,7 +94,8 @@ export const deleteEmployee = (empId) => {
         method: "DELETE",
         headers: {
             "Accept": "application/json",
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": defaultAuthorization()
         }
     })
 }
@@ -96,7 +107,8 @@ export const putRequest = (path, etag, body) => {
         headers: {
             "Accept": "application/json",
             "Content-type": "application/json",
-            'If-Match': etag
+            'If-Match': etag,
+            "Authorization": defaultAuthorization()
         },
         body: JSON.stringify(body)
     });
@@ -128,7 +140,8 @@ export const setupRequest = (path, etag, body) => {
         headers: {
             "Accept": "application/json",
             "Content-type": "application/json",
-            'If-Match': etag
+            'If-Match': etag,
+            "Authorization": defaultAuthorization()
         },
         body: JSON.stringify(body)
     });

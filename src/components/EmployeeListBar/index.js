@@ -10,6 +10,9 @@ import EmployeeCreateDialog from '../EmployeeCreateDialog';
 
 import * as dummyEmployees 
     from '../../utils/dummy/employees';
+
+import RoleAwareComponent  
+    from '../../shared/RoleAwareComponent';
 import './index.css' ;
 
 
@@ -17,10 +20,14 @@ const style = {
     float: "right"
 };
 
-class EmployeeListBar extends Component {
+class EmployeeListBar extends RoleAwareComponent {
 
     constructor(props) {
+
         super(props);
+
+        this.authorize = ['ROLE_ADMIN']
+
         this.state = {
             activePage: 1,
             dummyEmployeeStore: {
@@ -63,7 +70,7 @@ class EmployeeListBar extends Component {
         const {  count, setErrorMessage } = this.state.dummyEmployeeStore;
         const { jobFamilies } = dummyEmployees.jobFamilies;
 
-        return (
+         const jsx = (
             <div id="employee-list">
                 <List>
                     {this.renderEmployees()}
@@ -81,11 +88,14 @@ class EmployeeListBar extends Component {
                 />
             </div>
         );
+
+        return this.shouldBeVisible() ? jsx : null;
     }
 }
 
 export default connect((state) => {
   return {
+    roles: state.account.roles,
     employees: state.employees.employees,
     currentEmployee: state.employees.currentEmployee
   }

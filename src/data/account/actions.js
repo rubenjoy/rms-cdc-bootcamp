@@ -7,6 +7,13 @@ export const login = (account) => {
     };
 };
 
+export const getRoles = (account) => {
+    return {
+        type: actionTypes.GET_ROLES,
+        payload: account
+    };
+};
+
 export const logout = () => {
     return {
         type: actionTypes.LOGOUT

@@ -6,6 +6,8 @@ import Power from 'material-ui/svg-icons/action/power-settings-new';
 import {connect} from 'react-redux';
 import { dispatchLogout } 
     from '../../data/account/actionCreators'
+import { dispatchRouter } 
+    from '../../data/router/actionCreators'
 import { Router, browserHistory } from 'react-router'
 import './index.css';
 
@@ -31,7 +33,7 @@ class BarContent extends Component {
 
     logout () {
         dispatchLogout(this.props)(() => {
-          browserHistory.push('/')
+          dispatchRouter(this.props)('/')
         });
     }
     

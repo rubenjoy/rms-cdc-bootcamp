@@ -6,12 +6,20 @@ import NoData from '../components/NoData';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as RMSActions from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
-class TabGrade extends Component {
+class TabGrade extends RoleAwareComponent {
     constructor (props) {
         super(props);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
-  render() {
+
+   render() {
     
     const {grades, empId, jobFamily, etag} = this.props.currentEmployee;
 
@@ -27,6 +35,7 @@ class TabGrade extends Component {
                     empId={empId ? empId : 0}
                     onSaveGrades={onSaveGrades}
                     jobFamilies={this.props.jobFamilies}
+                    roleVisible={this.shouldBeVisible()}
                 /> 
         : <NoData text={"No Grades"}/>
         }
@@ -37,6 +46,7 @@ class TabGrade extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
+        roles: state.account.roles,
         currentEmployee: state.employees.currentEmployee,
         jobFamilies: state.employees.jobFamilies
     };

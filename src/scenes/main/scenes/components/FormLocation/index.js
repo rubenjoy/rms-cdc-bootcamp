@@ -233,6 +233,7 @@ class FormLocation extends Component {
                         <ContentAdd onClick={() => this.onAddLoc()} />
                     </FloatingActionButton> : ""
                 }
+              {  this.props.roleVisible ? (
                 <div className="row" id="bottom-bar">
                     <RaisedButton label="Save" secondary={true} style={editMode ? buttonStyle : hiddenStyle}
                                   onClick={() => this.saveEditLocs()}  />
@@ -240,7 +241,8 @@ class FormLocation extends Component {
                                   onClick={() => this.cancelEditLocs()}  />
                     <RaisedButton label="Edit" secondary={true} style={editMode ? hiddenStyle : buttonStyle}
                                   onClick={() => this.setToEditMode()}  />
-                </div>
+                </div>) : null
+             }
             </div>
         );
     }

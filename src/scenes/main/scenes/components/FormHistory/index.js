@@ -313,6 +313,7 @@ class FormHistory extends Component {
                         <ContentAdd onClick={() => this.onAddProject()} />
                     </FloatingActionButton> : ""
                 }
+                { this.props.roleVisible ? (
                 <div className="row" id="bottom-bar">
                     <RaisedButton label="Save" secondary={true} style={editMode ? buttonStyle : hiddenStyle}
                                   onClick={() => this.saveEditProjects()}  />
@@ -320,7 +321,7 @@ class FormHistory extends Component {
                                   onClick={() => this.cancelEditProjects()}  />
                     <RaisedButton label="Edit" secondary={true} style={editMode ? hiddenStyle : buttonStyle}
                                   onClick={() => this.setToEditMode()}  />
-                </div>
+                </div> ) : null}
             </div>
         );
     }

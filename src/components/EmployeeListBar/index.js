@@ -11,7 +11,9 @@ import EmployeeCreateDialog from '../EmployeeCreateDialog';
 import * as dummyEmployees 
     from '../../utils/dummy/employees';
 
-import RoleAwareComponent  
+import { ROLE_ADMIN } 
+    from '../../utils/lib/constants';
+import RoleAwareComponent 
     from '../../shared/RoleAwareComponent';
 import './index.css' ;
 
@@ -26,14 +28,15 @@ class EmployeeListBar extends RoleAwareComponent {
 
         super(props);
 
-        this.authorize = ['ROLE_ADMIN']
-
         this.state = {
             activePage: 1,
             dummyEmployeeStore: {
                 displayedList: dummyEmployees.employees
             }
         }
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
 
     createNewEmployee = (newEmployee) => {
@@ -70,26 +73,29 @@ class EmployeeListBar extends RoleAwareComponent {
         const {  count, setErrorMessage } = this.state.dummyEmployeeStore;
         const { jobFamilies } = dummyEmployees.jobFamilies;
 
-         const jsx = (
+         return (
             <div id="employee-list">
                 <List>
                     {this.renderEmployees()}
                 </List>
 
-                <FloatingActionButton id="add-button" mini={true} style={style}>
-                    <ContentAdd onClick={() => {this.openCreate()}} />
-                </FloatingActionButton>
+                {this.shouldBeVisible() ?
+                    (
+                        <FloatingActionButton id="add-button" mini={true} style={style}>
+                            <ContentAdd onClick={() => {this.openCreate()}} />
+                        </FloatingActionButton>
+                    ) : null
+                }
                 <EmployeeCreateDialog id="create-dialog"
-                                      ref="createDialog"
-                                      jobFamilies={jobFamilies}
-                                      count={count}
-                                      createNewEmployee={this.createNewEmployee}
-                                      setErrorMessage={setErrorMessage}
+                       ref="createDialog"
+                       jobFamilies={jobFamilies}
+                       count={count}
+                       createNewEmployee={this.createNewEmployee}
+                       setErrorMessage={setErrorMessage}
                 />
             </div>
         );
 
-        return this.shouldBeVisible() ? jsx : null;
     }
 }
 

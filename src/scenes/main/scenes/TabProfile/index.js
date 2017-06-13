@@ -9,8 +9,12 @@ import * as dummy
     from '../../../../utils/dummy/employees';
 import { dispatchUpdateEmployee } 
     from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
-class TabProfile extends Component {
+class TabProfile extends RoleAwareComponent {
 
     constructor (props) {
         super();
@@ -23,6 +27,9 @@ class TabProfile extends Component {
         }
         this.updateEmployeeForm = this.updateEmployeeForm.bind(this);
         this.getInitialEmployee = this.getInitialEmployee.bind(this);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
 
     onCancel () {
@@ -58,6 +65,7 @@ class TabProfile extends Component {
                                  onSave={this.onSave}
                                  onCancel={this.onCancel}
                                  currentGrade={this.state.employee.grades.map((grade)=> grade.endDate == null ? grade.grade : null)}
+                                 roleVisible={this.shouldBeVisible()}
                         />
                     : <NoData/> }
             </div>
@@ -68,6 +76,7 @@ class TabProfile extends Component {
 
 export default connect((state) => {
   return {
+    roles: state.account.roles,
     employees: state.employees.employees,
     currentEmployee: state.employees.currentEmployee,
     jobFamilies: state.employees.jobFamilies

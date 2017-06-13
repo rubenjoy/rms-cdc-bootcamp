@@ -6,12 +6,19 @@ import FormHistory from '../components/FormHistory';
 import NoData from '../components/NoData';
 import { dispatchUpdateProjects } 
     from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
-class TabHistory extends Component {
+class TabHistory extends RoleAwareComponent {
 
     constructor (props) {
         super(props);
         this.onSaveProjects = this.onSaveProjects.bind(this);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
 
     onSaveProjects(newProjects, currentEmployee){
@@ -33,6 +40,7 @@ class TabHistory extends Component {
                                  currentEmployee={currentEmployee}
                                  setErrorMessage={setErrorMessage}
                                  viewingEmpId={viewingEmpId ? viewingEmpId : 0}
+                                 roleVisible={this.shouldBeVisible()}
                     /> : <NoData text={'No History'}/> }
             </div>
         );
@@ -43,6 +51,7 @@ class TabHistory extends Component {
 
 export default connect((state) => {
   return {
+    roles: state.account.roles,
     currentEmployee: state.employees.currentEmployee
   }
 })(TabHistory);

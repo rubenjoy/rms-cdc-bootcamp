@@ -262,14 +262,15 @@ class FormFamily extends Component {
                         <ContentAdd onClick={() => this.onAddFamilyMembers()} />
                     </FloatingActionButton> : ""
                 }
-                <div className="row" style={buttomBar}>
+              {  this.props.roleVisible ? (<div className="row" style={buttomBar}>
                     <RaisedButton label="Save" secondary={true} style={editMode ? buttonStyle : hiddenStyle}
                                   onClick={() => this.saveEditFamilyMembers()}  />
                     <RaisedButton label="Cancel" style={editMode ? buttonStyle : hiddenStyle}
                                   onClick={() => this.cancelEditFamilyMembers()}  />
                     <RaisedButton label="Edit" secondary={true} style={editMode ? hiddenStyle : buttonStyle}
                                   onClick={() => this.setToEditMode()}  />
-                </div>
+                </div>) : null
+              }
             </div>
         );
     }

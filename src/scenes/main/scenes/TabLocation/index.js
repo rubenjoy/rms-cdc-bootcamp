@@ -8,15 +8,22 @@ import { offices }
     from '../../../../utils/dummy/employees';
 import { dispatchUpdateLocations } 
     from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
 
-class TabLocation extends Component {
+class TabLocation extends RoleAwareComponent {
     constructor (props) {
       super(props);
       this.state = {
         offices
       }
       this.onSaveLocation = this.onSaveLocation.bind(this);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
 
     onSaveLocation (newLocations) {
@@ -37,6 +44,7 @@ class TabLocation extends Component {
                               officeAddresses={this.state.offices ? this.state.offices : []}
                               viewingEmpId={viewingEmpId ? viewingEmpId : 0}
                               setErrorMessage={setErrorMessage}
+                              roleVisible={this.shouldBeVisible()}
                 /> : <NoData text={'No Locations'}/>
             }
         </div>
@@ -46,6 +54,7 @@ class TabLocation extends Component {
 
 export default connect((state) => {
   return {
+    roles: state.account.roles,
     currentEmployee: state.employees.currentEmployee
   }
 })(TabLocation);

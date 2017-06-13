@@ -352,7 +352,7 @@ class FormProfile extends Component {
                     </Row>
                 </Grid>
                 {
-                    this.props.isPopup ? null : (
+                    this.props.isPopup || !this.props.roleVisible ? null : (
                     <div className="row" id="bottom-bar">
                         <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
                         <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.props.onCancel()}  />

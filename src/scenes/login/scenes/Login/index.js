@@ -7,6 +7,8 @@ import { dispatchLogin }
     from '../../../../data/account/actionCreators'
 import { dispatchFetchEmployees } 
     from '../../../../data/employees/actionCreators'
+import { dispatchRouter } 
+    from '../../../../data/router/actionCreators'
 import { Router, browserHistory } from 'react-router'
 import './index.css' ;
 
@@ -17,8 +19,8 @@ class Login extends Component {
 
         this.state = {
             account : {
-                username: null,
-                password: null
+                username: "",
+                password: ""
             }
         }
         this.login = this.login.bind(this);
@@ -26,7 +28,7 @@ class Login extends Component {
 
     login () {
         dispatchLogin(this.props)(this.state.account, () => {
-          browserHistory.push('/profile')
+          dispatchRouter(this.props)('/profile');
           dispatchFetchEmployees(this.props)();
         });
     }
@@ -43,24 +45,24 @@ class Login extends Component {
             <div className="login">
               <div className="login-page">
                 <div className="form">
-                  <form class="register-form">
-                  <TextField
-                    name="username"
-                    placeholder="username"
-                    value = {this.state.account.username}
-                    onChange={this.handleChangeText}
-                    floatingLabelFixed={true}
-                  />
-                  <TextField
-                    name="password"
-                    placeholder="password"
-                    value = {this.state.account.password}
-                    onChange={this.handleChangeText}
-                    type="password"
-                  /><br />
-                  <RaisedButton label="Login" 
-                      onClick={this.login}/>
-                      </form>
+                  <form>
+                    <TextField
+                      name="username"
+                      placeholder="username"
+                      value = {this.state.account.username}
+                      onChange={this.handleChangeText}
+                      floatingLabelFixed={true}
+                    />
+                    <TextField
+                      name="password"
+                      placeholder="password"
+                      value = {this.state.account.password}
+                      onChange={this.handleChangeText}
+                      type="password"
+                    /><br />
+                    <RaisedButton label="Login" 
+                        onClick={this.login}/>
+                  </form>
                 </div>
               </div>
                 

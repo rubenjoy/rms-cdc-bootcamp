@@ -6,8 +6,19 @@ import NoData from '../components/NoData';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as RMSActions from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
-class TabFamily extends Component {
+class TabFamily extends RoleAwareComponent {
+
+    constructor (props) {
+        super(props);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
+    }
 
   render() {
     
@@ -32,6 +43,7 @@ class TabFamily extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
+        roles: state.account.roles,
         currentEmployee: state.employees.currentEmployee
     };
 }

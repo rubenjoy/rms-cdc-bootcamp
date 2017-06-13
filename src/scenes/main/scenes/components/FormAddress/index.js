@@ -72,6 +72,13 @@ class FormAddress extends Component {
 
         const { streetAddress, city, province, postCode } = this.state.address;
 
+        const activityButtons = this.props.roleVisible ? (
+                <div className="row" id="bottom-bar">
+                    <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
+                    <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.onCancel()}  />
+                </div>
+            ) : null;
+
         return (
             <div className="tab-address">
                 <div id="address-form">
@@ -100,10 +107,8 @@ class FormAddress extends Component {
                     />
                 </div>
 
-                <div className="row" id="bottom-bar">
-                    <RaisedButton label="Save" secondary={true} style={buttonStyle} onClick={() => this.onSave()} />
-                    <RaisedButton label="Cancel" style={buttonStyle} onClick={() => this.onCancel()}  />
-                </div>
+                {activityButtons}
+            
             </div>
         );
     }

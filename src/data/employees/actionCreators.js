@@ -1,8 +1,11 @@
 import * as action from './actions';
+import * as accountAction from '../account/actions';
+import { browserHistory, Router } from 'react-router'
 import 'whatwg-fetch';
 import { patchEmployee, getEmployee, addEmployee, deleteEmployee, 
     setupRequest, putProjects, putLocations, defaultGetHeader, searchEmployeesByName, filterEmployees } 
     from '../../utils/lib/employeeApiHelpers';
+import { push } from 'react-router-redux';
 
 const ENDPOINT_URL = 'http://localhost:9090/employees';
 const Paging_Info = {size: 10};
@@ -16,10 +19,16 @@ export const dispatchFetchEmployees = ({dispatch}) => {
             headers: defaultGetHeader()
         })
         .then(response => {
-            if (response.ok) return response.json()
-            throw new Error('error')
+            if (response.ok) {
+                return response.json()
+            } else if(response.status === 401) {
+                dispatch(push('/login'))
+            } else {
+                throw new Error('error');
+            }
         })
         .then(json => {
+            if (!json) return
             dispatch(action.fetchEmployees(json._embedded.employees));
         })
         .catch(error => {
@@ -30,17 +39,24 @@ export const dispatchFetchEmployees = ({dispatch}) => {
 }; 
 
 const setCurrEmployee = (dispatch, empId, callback) => {
-    debugger
     let fetchedEmployee = {}
     getEmployee(empId, callback)
         .then ((response) => {
             if(response.ok){
-                debugger
                 fetchedEmployee.etag = response.headers.get("Etag");
                 return response.json();
+     /*       } else if(response.status === 401) {
+                dispatch(push('/login'));
+                dispatch(accountAction.logout());
+                sessionStorage.removeItem('accessToken');
+                sessionStorage.removeItem('roles');*/
+            } else {
+                throw new Error('error');
             }
+
         })
         .then((json) => {
+            if (!json) return
             fetchedEmployee = {
                 ...fetchedEmployee,
                 ...json

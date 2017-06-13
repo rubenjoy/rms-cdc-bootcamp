@@ -7,8 +7,13 @@ import * as _ from 'lodash';
 import NoData from '../components/NoData';
 import { dispatchUpdateEmployee } 
     from '../../../../data/employees/actionCreators';
+import { ROLE_ADMIN } 
+    from '../../../../utils/lib/constants';
+import RoleAwareComponent 
+    from '../../../../shared/RoleAwareComponent';
 
-class TabAddress extends Component {
+
+class TabAddress extends RoleAwareComponent {
 
     constructor (props) {
         super(props);
@@ -17,6 +22,9 @@ class TabAddress extends Component {
         this.setStateWithPropsInitialValue  = this.setStateWithPropsInitialValue.bind(this);
 
         this.setStateWithPropsInitialValue(props);
+
+        // Authorise
+        this.authorize = [ROLE_ADMIN];
     }
 
     setStateWithPropsInitialValue = (props) => {
@@ -55,7 +63,8 @@ class TabAddress extends Component {
     render () {
         return (
             <div>
-                {!_.isEmpty(this.state.employee) ? <FormAddress initialValues={this.state.address} onSave={this.updateEmployee} />
+                {!_.isEmpty(this.state.employee) ? <FormAddress initialValues={this.state.address} onSave={this.updateEmployee} 
+                roleVisible={this.shouldBeVisible()}/>
                     : <NoData/>}
             </div>
         );
@@ -64,6 +73,7 @@ class TabAddress extends Component {
 
 export default connect((state) => {
   return {
+    roles: state.account.roles,
     currentEmployee: state.employees.currentEmployee
   }
 })(TabAddress)

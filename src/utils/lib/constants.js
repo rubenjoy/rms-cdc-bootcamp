@@ -32,3 +32,5 @@ export const sortByOptions = [
     {text: "Created Date", value: "dateAdded"},
     {text: "Modified Date", value: "lastModified"}
 ]
+
+export const ROLE_ADMIN = "ROLE_ADMIN"

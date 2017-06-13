@@ -223,15 +223,17 @@ class FormGrade extends Component {
                         <ContentAdd onClick={() => this.onAddGrade()} />
                     </FloatingActionButton> : ""
                 }
-                <div className="row" style={buttomBar}>
-                    <RaisedButton label="Save" secondary={true} style={editMode ? buttonStyle : hiddenStyle}
-                                  onClick={() => this.saveEditGrades()}  />
-                    <RaisedButton label="Cancel" style={editMode ? buttonStyle : hiddenStyle}
-                                  onClick={() => this.cancelEditGrades()}  />
-                    <RaisedButton label="Edit" secondary={true} style={editMode ? hiddenStyle : buttonStyle}
-                                  onClick={() => this.setToEditMode()}  />
-                </div>
-            </div>
+                { this.props.roleVisible ? (
+                      <div className="row" style={buttomBar}>
+                          <RaisedButton label="Save" secondary={true} style={editMode ? buttonStyle : hiddenStyle}
+                                        onClick={() => this.saveEditGrades()}  />
+                          <RaisedButton label="Cancel" style={editMode ? buttonStyle : hiddenStyle}
+                                        onClick={() => this.cancelEditGrades()}  />
+                          <RaisedButton label="Edit" secondary={true} style={editMode ? hiddenStyle : buttonStyle}
+                                        onClick={() => this.setToEditMode()}  />
+                      </div>) : null
+                }
+                 </div> 
         );
     }
 }
